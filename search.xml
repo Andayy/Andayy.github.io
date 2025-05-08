@@ -15,6 +15,31 @@
     </entry>
     
     
+    
+    <entry>
+      <title>tes</title>
+      <link href="/2017/12/24/tes/"/>
+      <url>/2017/12/24/tes/</url>
+      
+        <content type="html"><![CDATA[<p>title: test<br>date: 2017-12-24 23:29:53<br>tags:</p><ul><li>Foo</li><li>Bar<br>categories: </li><li>Baz</li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 123 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> test </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
