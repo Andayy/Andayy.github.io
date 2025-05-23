@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>内网信息收集</title>
+      <link href="/2025/05/23/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
+      <url>/2025/05/23/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="网络信息："><a href="#网络信息：" class="headerlink" title="网络信息："></a>网络信息：</h2><p>​last命令：<br>可以查看ssh登陆记录，看一下什么账号登陆的，登陆IP这些信息<br>​netstat:<br>​host文件:<br>​解析记录、内部域名<br>​ip route:路由表信息<br>​DNS记录</p><h2 id="各类密码"><a href="#各类密码" class="headerlink" title="各类密码"></a>各类密码</h2><p>​web各类配置文件<br>​数据库相关表：<br>​config表：可能有邮件密码<br>​用户表</p><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>​运维监控类进程<br>​经典组件：Zabbix<br>​国产第三方或自研<br>​</p><h2 id="攻击路径"><a href="#攻击路径" class="headerlink" title="攻击路径:"></a>攻击路径:</h2><p>​起点信息<br>​last获取堡垒机地址<br>​收集进程信息可能会运行自研工具（审计源码可能会存在一些漏洞）<br>​内部员工账号凭据</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CTFSHOW-JWT专题</title>
       <link href="/2025/05/22/jwt/"/>
       <url>/2025/05/22/jwt/</url>
