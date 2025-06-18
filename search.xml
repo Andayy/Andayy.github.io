@@ -25,6 +25,25 @@
     
     
     <entry>
+      <title>win和linux提权</title>
+      <link href="/2025/06/18/windows%E6%8F%90%E6%9D%83/"/>
+      <url>/2025/06/18/windows%E6%8F%90%E6%9D%83/</url>
+      
+        <content type="html"><![CDATA[<p>##windows权限提升信息搜集</p><ol><li><p><code>systeminfo</code> 搜集系统信息</p></li><li><p><code>net user</code> 对当前用户进行信息搜集</p></li><li><p><code>query user</code> 查看当前在线用户</p></li><li><p><code>tasklist /svc</code> 对进程信息搜集</p></li><li><p>补丁信息搜集</p><p><img src="/../images/image-20250618174355816.png" alt="image-20250618174355816"></p></li></ol><h2 id="windows系统错误配置错误提权"><a href="#windows系统错误配置错误提权" class="headerlink" title="windows系统错误配置错误提权"></a>windows系统错误配置错误提权</h2><ol><li>该漏洞利用window文件路径解析的特性，系统在解析服务的二进制文件对应的文件路径时，遇到空格也会以系统权限进行解析</li><li>可以通过wmic来查看没有被引号引起来的服务路径</li></ol><h2 id="windows启动项提权"><a href="#windows启动项提权" class="headerlink" title="windows启动项提权"></a>windows启动项提权</h2><p>window在开机启动的时候会启动一-些程序，并且是以system权限启动，利用这一点，在攻击者有权限往启动目录写入文件的时候，可以构造恶意脚本达到提权目的。</p><hr><h2 id="linux提权信息搜集"><a href="#linux提权信息搜集" class="headerlink" title="linux提权信息搜集"></a>linux提权信息搜集</h2><p><img src="/../images/image-20250618181646739.png" alt="image-20250618181646739"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 提权 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux信息搜集</title>
       <link href="/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"/>
       <url>/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</url>
