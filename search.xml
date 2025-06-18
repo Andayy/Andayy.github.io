@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>域基础知识</title>
+      <link href="/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+      <url>/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/../images/image-20250618152546303.png" alt="image-20250618152546303"></p><p>域本地组——来自全林作用于本域</p><p>全局组——来自本域作用于全林</p><p>通用组——来自全林作用于全林</p><h2 id="windows-HASH"><a href="#windows-HASH" class="headerlink" title="windows HASH"></a>windows HASH</h2><p>本机用户的密码hash存放在SAM(C:\Windows\System32\config)文件中</p><p>域内用户密码hash存放在域控的NTDS.DIT文件中</p><p>windows系统导出密码的格式如下：</p><p>用户名;RID:LM-HASH:NTLM-HASH</p><p>(1)用户密码≤14字符 sam文件中是LM-HASH+NTLM-HASH</p><p>(2)用户密码≥14字符 sam文件中是NTLM-HASH</p><h3 id="LM-HASH"><a href="#LM-HASH" class="headerlink" title="LM-HASH"></a>LM-HASH</h3><p>LM Hash全称是LAN Manager Hash，Windows最早用的加密算法，容易破解</p><p>从Windows Vista和Windows7(包括)、Win2008开始，LM Hash默认被禁用(可以在SAM或者NTDS中找到它)</p><p><img src="/../images/image-20250618153921445.png" alt="image-20250618153921445"></p><p><img src="/../images/image-20250618155741827.png" alt="image-20250618155741827"></p><p>缺陷：</p><p>​口令不区分大小写</p><p>​口令长度最大14字节</p><p>​DES算法强度不够</p><h3 id="NTLM-HASH"><a href="#NTLM-HASH" class="headerlink" title="NTLM-HASH"></a>NTLM-HASH</h3><p>可以直接用于PTH,通常存在于LSASS进程中。</p><p><img src="/../images/image-20250618160330536.png" alt="image-20250618160330536"></p><p><img src="/../images/image-20250618160443434.png" alt="image-20250618160443434"></p><h3 id="Net-NTLM-HASH"><a href="#Net-NTLM-HASH" class="headerlink" title="Net-NTLM-HASH"></a>Net-NTLM-HASH</h3><p><img src="/../images/image-20250618160532064.png" alt="image-20250618160532064"></p><p>NTLM协议：</p><p><img src="/../images/image-20250618160738163.png" alt="image-20250618160738163"></p><h2 id="windows-kerberos认证"><a href="#windows-kerberos认证" class="headerlink" title="windows kerberos认证"></a>windows kerberos认证</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>允许某实体在非安全的网络环境下通信，向另一个实体以一种安全的方式证明自己的身份。主要针对客户-服务器模型，提供了一系列交互认证——用户和服务器都可以认证对方身份</p><h3 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h3><p>AS 身份校验</p><p>KDC 密钥分发中心</p><p>TGT 票据授权票据</p><p>TGS 票据授权服务器</p><p>SS 服务提供端</p><p><img src="/../images/image-20250618164001443.png" alt="image-20250618164001443"></p><p><img src="/../images/image-20250618164612633.png" alt="image-20250618164612633"></p><h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p><img src="/../images/image-20250618165242796.png" alt="image-20250618165242796"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 内网 </tag>
+            
+            <tag> 域 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux信息搜集</title>
       <link href="/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"/>
       <url>/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</url>
@@ -130,7 +151,7 @@
       <link href="/2025/05/23/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"/>
       <url>/2025/05/23/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
       
-        <content type="html"><![CDATA[<h2 id="网络信息："><a href="#网络信息：" class="headerlink" title="网络信息："></a>网络信息：</h2><p>​last命令：<br>可以查看ssh登陆记录，看一下什么账号登陆的，登陆IP这些信息<br>​netstat:<br>​host文件:<br>​解析记录、内部域名<br>​ip route:路由表信息<br>​DNS记录</p><h2 id="各类密码"><a href="#各类密码" class="headerlink" title="各类密码"></a>各类密码</h2><p>​web各类配置文件<br>​数据库相关表：<br>​config表：可能有邮件密码<br>​用户表</p><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>​运维监控类进程<br>​经典组件：Zabbix<br>​国产第三方或自研<br>​</p><h2 id="攻击路径"><a href="#攻击路径" class="headerlink" title="攻击路径:"></a>攻击路径:</h2><p>​起点信息<br>​last获取堡垒机地址<br>​收集进程信息可能会运行自研工具（审计源码可能会存在一些漏洞）<br>​内部员工账号凭据</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="网络信息："><a href="#网络信息：" class="headerlink" title="网络信息："></a>网络信息：</h2><p>​last命令：<br>可以查看ssh登陆记录，看一下什么账号登陆的，登陆IP这些信息<br>​netstat:<br>​host文件:<br>​解析记录、内部域名<br>​ip route:路由表信息<br>​DNS记录</p><h2 id="各类密码"><a href="#各类密码" class="headerlink" title="各类密码"></a>各类密码</h2><p>​web各类配置文件<br>​数据库相关表：<br>​config表：可能有邮件密码<br>​用户表</p><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>​运维监控类进程<br>​经典组件：Zabbix<br>​国产第三方或自研<br>​</p><h2 id="攻击路径"><a href="#攻击路径" class="headerlink" title="攻击路径:"></a>攻击路径:</h2><p>​起点信息<br>​last获取堡垒机地址<br>​收集进程信息可能会运行自研工具（审计源码可能会存在一些漏洞）<br>​内部员工账号凭据</p><h2 id="端口开放信息"><a href="#端口开放信息" class="headerlink" title="端口开放信息"></a>端口开放信息</h2><p><img src="/../images/image-20250618112045269.png" alt="image-20250618112045269"></p>]]></content>
       
       
       

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="域本地组——来自全林作用于本域 全局组——来自本域作用于全林 通用组——来自全林作用于全林 windows HASH本机用户的密码hash存放在SAM(C:\Windows\System32\config)文件中 域内用户密码hash存放在域控的NTDS.DIT文件中 windows系统导出密码的格式如下： 用户名;RID:LM-HASH:NTLM-HASH (1)用户密码≤14字符 sam文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域基础知识">
+<meta property="og:url" content="http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="X1n">
+<meta property="og:description" content="域本地组——来自全林作用于本域 全局组——来自本域作用于全林 通用组——来自全林作用于全林 windows HASH本机用户的密码hash存放在SAM(C:\Windows\System32\config)文件中 域内用户密码hash存放在域控的NTDS.DIT文件中 windows系统导出密码的格式如下： 用户名;RID:LM-HASH:NTLM-HASH (1)用户密码≤14字符 sam文件">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/image-20250618152546303.png">
+<meta property="og:image" content="http://example.com/images/image-20250618153921445.png">
+<meta property="og:image" content="http://example.com/images/image-20250618155741827.png">
+<meta property="og:image" content="http://example.com/images/image-20250618160330536.png">
+<meta property="og:image" content="http://example.com/images/image-20250618160443434.png">
+<meta property="og:image" content="http://example.com/images/image-20250618160532064.png">
+<meta property="og:image" content="http://example.com/images/image-20250618160738163.png">
+<meta property="og:image" content="http://example.com/images/image-20250618164001443.png">
+<meta property="og:image" content="http://example.com/images/image-20250618164612633.png">
+<meta property="og:image" content="http://example.com/images/image-20250618165242796.png">
+<meta property="article:published_time" content="2025-06-18T07:43:45.000Z">
+<meta property="article:modified_time" content="2025-06-18T08:52:46.024Z">
+<meta property="article:author" content="xin">
+<meta property="article:tag" content="内网">
+<meta property="article:tag" content="域">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20250618152546303.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>域基础知识</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/17/Linux%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=域基础知识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=域基础知识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=域基础知识&body=Check out this article: http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=域基础知识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=域基础知识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-HASH"><span class="toc-number">1.</span> <span class="toc-text">windows HASH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LM-HASH"><span class="toc-number">1.1.</span> <span class="toc-text">LM-HASH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NTLM-HASH"><span class="toc-number">1.2.</span> <span class="toc-text">NTLM-HASH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Net-NTLM-HASH"><span class="toc-number">1.3.</span> <span class="toc-text">Net-NTLM-HASH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-kerberos%E8%AE%A4%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">windows kerberos认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">2.2.</span> <span class="toc-text">认证流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7"><span class="toc-number">2.3.</span> <span class="toc-text">缺陷</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        域基础知识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-18T07:43:45.000Z" class="dt-published" itemprop="datePublished">2025-06-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%86%85%E7%BD%91/" rel="tag">内网</a>, <a class="p-category" href="/tags/%E5%9F%9F/" rel="tag">域</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><img src="/../images/image-20250618152546303.png" alt="image-20250618152546303"></p>
+<p>域本地组——来自全林作用于本域</p>
+<p>全局组——来自本域作用于全林</p>
+<p>通用组——来自全林作用于全林</p>
+<h2 id="windows-HASH"><a href="#windows-HASH" class="headerlink" title="windows HASH"></a>windows HASH</h2><p>本机用户的密码hash存放在SAM(C:\Windows\System32\config)文件中</p>
+<p>域内用户密码hash存放在域控的NTDS.DIT文件中</p>
+<p>windows系统导出密码的格式如下：</p>
+<p>用户名;RID:LM-HASH:NTLM-HASH</p>
+<p>(1)用户密码≤14字符 sam文件中是LM-HASH+NTLM-HASH</p>
+<p>(2)用户密码≥14字符 sam文件中是NTLM-HASH</p>
+<h3 id="LM-HASH"><a href="#LM-HASH" class="headerlink" title="LM-HASH"></a>LM-HASH</h3><p>LM Hash全称是LAN Manager Hash，Windows最早用的加密算法，容易破解</p>
+<p>从Windows Vista和Windows7(包括)、Win2008开始，LM Hash默认被禁用(可以在SAM或者NTDS中找到它)</p>
+<p><img src="/../images/image-20250618153921445.png" alt="image-20250618153921445"></p>
+<p><img src="/../images/image-20250618155741827.png" alt="image-20250618155741827"></p>
+<p>缺陷：</p>
+<p>​	口令不区分大小写</p>
+<p>​	口令长度最大14字节</p>
+<p>​	DES算法强度不够</p>
+<h3 id="NTLM-HASH"><a href="#NTLM-HASH" class="headerlink" title="NTLM-HASH"></a>NTLM-HASH</h3><p>可以直接用于PTH,通常存在于LSASS进程中。</p>
+<p><img src="/../images/image-20250618160330536.png" alt="image-20250618160330536"></p>
+<p><img src="/../images/image-20250618160443434.png" alt="image-20250618160443434"></p>
+<h3 id="Net-NTLM-HASH"><a href="#Net-NTLM-HASH" class="headerlink" title="Net-NTLM-HASH"></a>Net-NTLM-HASH</h3><p><img src="/../images/image-20250618160532064.png" alt="image-20250618160532064"></p>
+<p>NTLM协议：</p>
+<p><img src="/../images/image-20250618160738163.png" alt="image-20250618160738163"></p>
+<h2 id="windows-kerberos认证"><a href="#windows-kerberos认证" class="headerlink" title="windows kerberos认证"></a>windows kerberos认证</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>允许某实体在非安全的网络环境下通信，向另一个实体以一种安全的方式证明自己的身份。主要针对客户-服务器模型，提供了一系列交互认证——用户和服务器都可以认证对方身份</p>
+<h3 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h3><p>AS 身份校验</p>
+<p>KDC 密钥分发中心</p>
+<p>TGT 票据授权票据</p>
+<p>TGS 票据授权服务器</p>
+<p>SS 服务提供端</p>
+<p><img src="/../images/image-20250618164001443.png" alt="image-20250618164001443"></p>
+<p><img src="/../images/image-20250618164612633.png" alt="image-20250618164612633"></p>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p><img src="/../images/image-20250618165242796.png" alt="image-20250618165242796"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+          <li><a href="/categories/">categories</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-HASH"><span class="toc-number">1.</span> <span class="toc-text">windows HASH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LM-HASH"><span class="toc-number">1.1.</span> <span class="toc-text">LM-HASH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NTLM-HASH"><span class="toc-number">1.2.</span> <span class="toc-text">NTLM-HASH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Net-NTLM-HASH"><span class="toc-number">1.3.</span> <span class="toc-text">Net-NTLM-HASH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-kerberos%E8%AE%A4%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">windows kerberos认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">2.2.</span> <span class="toc-text">认证流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7"><span class="toc-number">2.3.</span> <span class="toc-text">缺陷</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&text=域基础知识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&is_video=false&description=域基础知识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=域基础知识&body=Check out this article: http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&title=域基础知识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&name=域基础知识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/06/18/%E5%9F%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/&t=域基础知识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    xin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     --><!--
+       --><li><a href="/categories/">categories</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
