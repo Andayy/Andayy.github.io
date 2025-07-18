@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>CVE-2025-32463复现</title>
+      <link href="/2025/07/18/sudo%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E/"/>
+      <url>/2025/07/18/sudo%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E/</url>
+      
+        <content type="html"><![CDATA[<p>看到sudo爆出了漏洞，复现一下</p><h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p><strong>chroot环境</strong><br>（全称“change root”）是一种Unix&#x2F;Linux系统中的隔离技术，其核心作用是将进程的根目录（&#x2F;）切换到系统中的一个子目录，使该进程只能访问这个子目录内的文件和资源，无法突破到外部真实的文件系统。</p><p><strong>chroot 环境的具体表现</strong></p><p>​1.根目录被“替换”</p><p>进入chroot环境后，进程看到的&#x2F;（根目录）实际上是原系统中的一个普通子目录（例如&#x2F;tmp&#x2F;mychroot）。</p><p>​2.资源隔离<br>进程无法访问chroot目录之外的文件、设备或系统资源（如网络配置、其他分区等），仿佛运行在一个“迷你独立系统”中。<br>​3.权限限制<br>即使进程在chroot环境中拥有“root权限”，其操作范围也被限制在子目录内，无法影响外部真实系统（正常情况下）。</p><h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><p>Sudo 1.9.14+ 版本存在漏洞：它在切换环境（chroot）后过早解析路径，导致攻击者能通过伪造&#x2F;etc&#x2F;nsswitch.conf等文件，诱骗Sudo加载恶意库（如libnss_xxx.so）。无需特殊权限即可获得root权限，危害极大。</p><h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>这里使用github上的poc进行复现</p><p><a href="https://github.com/pr0v3rbs/CVE-2025-32463_chwoot/">pr0v3rbs&#x2F;CVE-2025-32463_chwoot: Escalation of Privilege to the root through sudo binary with chroot option. CVE-2025-32463</a></p><p><img src="/../images/image-20250718140000216.png" alt="image-20250718140000216"></p><h2 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h2><p>升级sudo版本，计时更新官方补丁</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CVE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>yakit靶场</title>
       <link href="/2025/07/14/yakit%E9%9D%B6%E5%9C%BA/"/>
       <url>/2025/07/14/yakit%E9%9D%B6%E5%9C%BA/</url>
